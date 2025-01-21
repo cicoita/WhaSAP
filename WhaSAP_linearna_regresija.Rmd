@@ -1,0 +1,214 @@
+---
+title: "Untitled"
+output: pdf_document
+date: "2025-01-07"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Učitavnje podataka iz tablice.
+```{r data}
+vivino.data = read.csv('vivino dataset.csv',header = T, sep = ',')
+summary(vivino.data)
+```
+Izbacivanje redaka koji su bez vrijednosti ili nevaljane vrijednosti.
+```{r}
+vivino.data <- vivino.data[vivino.data$Year != "N.V." & !is.na(vivino.data$Price) & vivino.data$Year != '', ]
+```
+
+Za predviđanje cijena vina koristit ćemo linearnu regresiju, no prvo je potrebno promotriti podatke kako bih znali kako konstruirat model.
+Različiti se prikazi koriste za numeričke i kategorijske varijable. Već se iz samih grafova vidi da postoje neke zavisnosti među varijablama, npr. vidi se da će vjerojatno s rastom ocjene rasti i cijena, dok broj recenzija ne izgleda da radi toliku razliku u cijeni.
+```{r scatter plots}
+vivino.data$Age = 2025 - as.numeric(vivino.data$Year)
+fit.age = lm(Price~Age,data=vivino.data)
+
+plot(vivino.data$Age,vivino.data$Price)
+lines(vivino.data$Age,fit.age$fitted.values,col='red')
+
+fit.rating = lm(Price~Rating,data=vivino.data)
+
+plot(vivino.data$Rating,vivino.data$Price)
+lines(vivino.data$Rating,fit.rating$fitted.values,col='red')
+
+fit.reviews = lm(Price~Reviews,data=vivino.data)
+
+plot(vivino.data$Reviews,vivino.data$Price)
+lines(vivino.data$Reviews,fit.reviews$fitted.values,col='red')
+
+boxplot(Price~Primary_Grape,data=vivino.data)
+boxplot(Price~Natural,data=vivino.data)
+boxplot(Price~Style,data=vivino.data)
+boxplot(Price~Country_Code,data=vivino.data)
+
+```
+
+
+Linearna regresija je jako osjetljiva na stršeče vrijednosti pa ćemo variajblu Price provući kroz logaritamsku funkciju kako bi se umanjio njihov utjecaj. Pomoću histograma možemo vidjeti da provlaćenjem cijene kroz logaritamsku funkciju distribucija više nalikuje normalnoj.
+```{r}
+hist(vivino.data$Price)
+
+vivino.data$Log_Price <- log(vivino.data$Price)
+
+hist(vivino.data$Log_Price)
+```
+Sada se bolje vidi kako numeričke varijable (Age, Reviews i Ratings) utjeću na cijenu vina. Uz to su dodani još grafovi s varijablama Age i Reviews provućenim kroz log.
+```{r lin plot}
+
+vivino.data$Age = 2025 - as.numeric(vivino.data$Year)
+fit.age = lm(Log_Price~Age,data=vivino.data)
+
+plot(vivino.data$Age,vivino.data$Log_Price)
+lines(vivino.data$Age,fit.age$fitted.values,col='red')
+
+
+vivino.data$Log_Age = log(vivino.data$Age)
+fit.age = lm(Log_Price~Log_Age,data=vivino.data)
+
+plot(vivino.data$Log_Age,vivino.data$Log_Price)
+lines(vivino.data$Log_Age,fit.age$fitted.values,col='red')
+
+
+fit.rating = lm(Log_Price~Rating,data=vivino.data)
+
+plot(vivino.data$Rating,vivino.data$Log_Price)
+lines(vivino.data$Rating,fit.rating$fitted.values,col='red')
+
+fit.reviews = lm(Log_Price~Reviews,data=vivino.data)
+
+plot(vivino.data$Reviews,vivino.data$Log_Price)
+lines(vivino.data$Reviews,fit.reviews$fitted.values,col='red')
+
+vivino.data$Log_Reviews = log(vivino.data$Reviews)
+fit.reviews = lm(Log_Price~Log_Reviews,data=vivino.data)
+
+plot(vivino.data$Log_Reviews,vivino.data$Log_Price)
+lines(vivino.data$Log_Reviews,fit.reviews$fitted.values,col='red')
+```
+Korelacijska matrica prikazuje povezanost između nezavisnih varijabli, što nam je bitno jer linearna regresiija loše funkcionira kada su nezavisne varijable jako korelirane, stoga je u tom slućaju dobra praksa izbaciti one koje su višak.
+```{r}
+
+plot(vivino.data$Rating, vivino.data$Age)
+plot(vivino.data$Rating, vivino.data$Reviews)
+plot(vivino.data$Age, vivino.data$Reviews)
+
+cor(cbind(vivino.data$Age,vivino.data$Rating,vivino.data$Reviews)) # korelacijski koeficijenti parova regresora
+
+```
+Katgorijske varijable se predstavljaju dummy varijablama. Svaka kategorija predstavljena je svojom vlastitom indikatorskom varijablom koja poprima vrijednost 1 u slučaju da originalna kategorijska varijabla poprima vrijednost te kategorije, a 0 inače.
+```{r kategorijske ulazne varijable - dummy varijable}
+
+require(fastDummies)
+vivino.data.d = dummy_cols(vivino.data,select_columns=c('Primary_Grape', 'Natural', 'Country_Code', 'Style'))
+
+summary(vivino.data.d)
+
+```
+U prvom modelu korištene su varijable: Age, Rating, Reviews, Natural, Style, Country_Code, Primary_Grape. Vidi se da model dosta loše procjenjuje po samoj prosječnoj grešci koja iznosi 105.3 eura. Vidi se i da su neke od kategorijskih varijabla visoko korelirane pa ćemo te varijable izbaciti iz modela. Također će biti izbaćene i one varijable koje nisu znaćajne za model tj. imaju visoku p vrijednost. Bitno je i da ovakav model za neke cijene predviđa negativne vrijednosti što nije prihvatljivo u ovom slućaju.
+```{r lin plot}
+model <- lm(Price ~ Age + Rating + Reviews + Natural + Style + Country_Code + Primary_Grape, data = vivino.data)
+
+summary(model)
+plot(model)
+```
+
+```{r lin plot}
+
+model_original <- lm(Price ~ Age + Rating + Reviews + Country_Code_AUS + Country_Code_FRA + Country_Code_ESP + Country_Code_USA, data = vivino.data.d)
+
+summary(model)
+
+plot(model_original)
+
+```
+Kada se koristi log od Cijene u modelu već se vidi znatno poboljšanje po R-squared i F testovima. No teško je bez računanja reći koliko je prosječna greška bolja jer je cijena u log.
+
+```{r lin plot}
+
+model <- lm(Log_Price ~ Age + Rating + Reviews + Natural + Style + Country_Code + Primary_Grape, data = vivino.data)
+
+summary(model)
+plot(model)
+```
+
+
+```{r lin plot}
+
+model_log <- lm(Log_Price ~ Age + Rating + Reviews + Country_Code_AUS + Country_Code_FRA + Country_Code_ESP + Country_Code_USA, data = vivino.data.d)
+summary(model_log)
+plot(model_log)
+
+
+model_log <- lm(Log_Price ~ Age + Rating + exp(Rating) + I(Age * Reviews * Rating) + log(Reviews) + Country_Code_AUS + Country_Code_FRA + Country_Code_ESP + Country_Code_USA, data = vivino.data.d)
+summary(model_log)
+plot(model_log)
+
+model_log <- lm(Log_Price ~ Age + Rating + exp(Rating) + I(log(Age) * log(Reviews) * exp(Rating)) + log(Reviews) + Country_Code_AUS + Country_Code_FRA + Country_Code_ESP + Country_Code_USA, data = vivino.data.d)
+summary(model_log)
+plot(model_log)
+
+
+```
+
+```{r}
+
+
+predictions_original <- predict(model_original, newdata = vivino.data.d)
+
+predictions_log <- exp(predict(model_log, newdata = vivino.data.d))
+
+actual <- vivino.data.d$Price
+
+mae_original <- mean(abs(predictions_original - actual))
+mae_log <- mean(abs(predictions_log - actual))
+
+rmse_original <- sqrt(mean((predictions_original - actual)^2))
+rmse_log <- sqrt(mean((predictions_log - actual)^2))
+
+mape_original <- mean(abs((predictions_original - actual) / actual)) * 100
+mape_log <- mean(abs((predictions_log - actual) / actual)) * 100
+
+
+cat("MAE (Original Scale):", mae_original, "\n")
+cat("MAE (Log Scale):", mae_log, "\n")
+
+```
+Kako bi poboljšali model ponekad je dobro izbaciti stršeće vrijednosti, jer one znatno utjeću na model a često nisu reprezentativna za većinu uzoraka. Npr, vrlo skupa ili retka vina često predstavljaju specifične slučajeve koje je teško objasniti bez šireg konteksta.
+```{r}
+
+standardized_residuals <- rstandard(model_log)
+
+outliers <- which(abs(standardized_residuals) > 3)
+
+vivino.data.d[outliers, ]
+
+vivino.data.cleaned <- vivino.data.d[-outliers, ]
+
+model_log <- lm(Log_Price ~ Age + Rating + exp(Rating) + I(log(Age) * log(Reviews) * exp(Rating)) + log(Reviews) + Country_Code_AUS + Country_Code_FRA + Country_Code_ESP + Country_Code_USA, data = vivino.data.cleaned)
+summary(model_log)
+plot(model_log)
+
+```
+
+```{r}
+
+
+predictions_original <- predict(model_original, newdata = vivino.data.d)
+
+predictions_log <- exp(predict(model_log, newdata = vivino.data.cleaned))
+
+actual <- vivino.data.d$Price
+actual_cleaned <- vivino.data.cleaned$Price
+
+mae_original <- mean(abs(predictions_original - actual))
+mae_log <- mean(abs(predictions_log - actual_cleaned))
+
+
+
+cat("MAE (Original Scale):", mae_original, "\n")
+cat("MAE (Log Scale):", mae_log, "\n")
+
+```
+
+#todo skaliraj podatke i opet probaj
