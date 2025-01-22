@@ -1,0 +1,40 @@
+hi-kvadrat test za nezavisnost je test kojime možemo
+izračunati jesu li dvije kategorijske vrijednosti
+nezavisne ili povezane.
+To se odrađuje uspoređivanjem očekivanja i očitanog.
+Pošto se u zadatku od nas traži da testiramo povezanost
+vrste vina i prirodnosti vina, moramo koristiti 
+hi-kvadrat test da odredimo povezanost.
+
+```{r}
+data <- read.csv("C:/AllStuff/sap/vivinodataset.csv")
+
+str(data)
+
+contingency_table <- table(data$Style, data$Natural)
+
+#podatci hi-kvadrat testa prikazuju se tablicom
+print(contingency_table)
+
+chi_sq_res <- chisq.test(contingency_table)
+
+print(chi_sq_res)
+
+library(ggplot2)
+
+contingency_df <- as.data.frame(contingency_table)
+
+ggplot(contingency_df, aes(x = Var1, y = Freq, fill = Var2)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(x = "Style", y = "Count", fill = "Natural") +
+  theme_minimal() +
+  ggtitle("Contingency Table Visualization")
+
+
+
+```
+
+rezultat: X-squared = 43.174, df = 5, p-value = 3.407e-08
+pošto je p<0.5 možemo odbaciti hipotezu 
+da su vrste vina povezane s da li su prirodne
+i prihvaćamo hipotezu da je to nepovezano kao točnu
