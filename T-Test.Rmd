@@ -1,0 +1,220 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+library(dplyr)
+vivino = read.csv("C:/FER/3.Godina/SAP/Vivino.csv")
+dim(vivino)
+```
+
+PITANJE: Jesu li vina iz Francuske popularnija (imaju više recenzija) od onih iz italije?
+
+Hipoteze:
+  H0: yfr = yita
+  H1: yfr > yita
+
+Prikaz podataka o broju recenzija vina
+
+```{r}
+francuskaVina = vivino[vivino$Country == "France",]
+talijanskaVina = vivino[vivino$Country == "Italy",]
+cat("Prosječan broj recenzija Francuskih vina:", mean(francuskaVina$Reviews), "\n")
+cat("Prosječan broj recenzija Talijanskih vina:", mean(talijanskaVina$Reviews), "\n")
+```
+
+Prikaz podataka i provjera normalnosti:
+
+```{r}
+hist(francuskaVina$Reviews, 
+     main = "Broj ocjena vina iz Francuske",
+     xlab = "Broj ocjena",
+     col = "blue",
+     breaks = 10)
+
+hist(talijanskaVina$Reviews,
+     main = "Broj ocjena vina iz Italije",
+     xlab = "Broj ocjena",
+     col = "blue",
+     breaks = 20)
+```
+Iz histograma je vidljivo kako podatci nisu normalno distribuirani, zbog čega se primjenjuje logaritamska funkcija u pokušaju normalizacije podataka.
+
+Prikaz podataka i provjera normalnosti logaritma broja recenzija
+
+```{r}
+francuskaVina$LogReviews = log(francuskaVina$Reviews + 1)
+talijanskaVina$LogReviews = log(talijanskaVina$Reviews + 1)
+
+hist(francuskaVina$LogReviews, 
+     main = "Broj ocjena vina iz Francuske",
+     xlab = "Broj ocjena",
+     col = "blue",
+     breaks = 20)
+
+hist(talijanskaVina$LogReviews,
+     main = "Broj ocjena vina iz Italije",
+     xlab = "Broj ocjena",
+     col = "blue",
+     breaks = 20)
+```
+
+Provjera dobivenih rezultata Kolmogorov-Smirnovov testom
+Hipoteze:
+  H0: podatci su iz normalne razdiobe
+  H1: podatci nisu iz normalne razdiobe
+
+```{r}
+france_data = francuskaVina$LogReviews
+italy_data = talijanskaVina$LogReviews
+
+ks.test(france_data, "pnorm", mean = mean(france_data), sd = sd(france_data))
+ks.test(italy_data, "pnorm", mean = mean(italy_data), sd = sd(italy_data))
+
+qqnorm(france_data, main = "Francuska Q-Q grafikon")
+qqline(france_data, col = "blue")
+
+qqnorm(italy_data, main = "Italija Q-Q grafikon")
+qqline(italy_data, col = "red")
+
+```
+
+Iz KS testa vidimo da je p-vrijednost vrlo mala, što znači da možemo odbaciti hipotezu H0, tj. logaritam broja recenzija ne zadovoljava normalnu distribuciju.
+
+Druga transformacija podataka dobivena je iz korijena broja recenzija:
+
+```{r}
+francuskaVina$SqrtReviews = sqrt(francuskaVina$Reviews)
+talijanskaVina$SqrtReviews = sqrt(talijanskaVina$Reviews)
+
+hist(francuskaVina$SqrtReviews,
+     main = "Broj recenzija Francuskog vina",
+     xlab = "Broj recenzija",
+     col = "blue",
+     breaks = 20)
+
+hist(talijanskaVina$SqrtReviews,
+     main = "Broj recenzija Talijanskog vina",
+     xlab = "Broj recenzija",
+     col = "blue",
+     breaks = 20)
+
+```
+
+Korijen broja recenzija također ne dolazi iz normalne distribucije.
+
+Izbacivanje outliera:
+```{r}
+
+#Izbacivanje outliera za francuska vina
+Q1_France = quantile(francuskaVina$Reviews, 0.25)
+Q3_France = quantile(francuskaVina$Reviews, 0.75)
+IQR_France = Q3_France - Q1_France
+donjaGranicaFrance = Q1_France - 1.5 * IQR_France
+gornjaGranicaFrance = Q3_France + 1.5 * IQR_France
+francuskaVinaNoOutliers = francuskaVina[francuskaVina$Reviews >= donjaGranicaFrance & francuskaVina$Reviews <= gornjaGranicaFrance, ]
+
+#Izbacivanje outliera za talijanska vina
+Q1_Italy = quantile(talijanskaVina$Reviews, 0.25)
+Q3_Italy = quantile(talijanskaVina$Reviews, 0.75)
+IRQ_Italy = Q3_Italy - Q1_Italy
+donjaGranicaItaly = Q1_Italy - 1.5*IRQ_Italy
+gornjaGranicaItaly = Q3_Italy + 1.5*IRQ_Italy
+talijanskaVinaNoOutliers = talijanskaVina[talijanskaVina$Reviews >= donjaGranicaItaly & talijanskaVina$Reviews <= gornjaGranicaItaly, ]
+
+# Histogram
+hist(francuskaVinaNoOutliers$Reviews, 
+     main = "Broj ocjena vina iz Francuske bez outliera",
+     xlab = "Broj ocjena",
+     col = "blue",
+     breaks = 20)
+
+hist(talijanskaVinaNoOutliers$Reviews, 
+     main = "Broj ocjena vina iz Italije bez outliera", 
+     xlab = "Broj ocjena", 
+     col = "red",
+     breaks = 20)
+```
+
+Izbacivanjem outliera bliže smo normalnoj razdiobi nego prije, ali podatci i dalje ne slijede normalnu razdiobu.
+Za pokušaj postizanja normalne razdiobe primjenjuje se logaritamska i korijen funkcija na podatke bez outliera:
+
+```{r}
+francuskaVinaNoOutliers$LogReviews = log(francuskaVinaNoOutliers$Reviews+1)
+talijanskaVinaNoOutliers$LogReviews = log(talijanskaVinaNoOutliers$Reviews+1)
+
+francuskaVinaNoOutliers$SqrtReviews = sqrt(francuskaVinaNoOutliers$Reviews+1)
+talijanskaVinaNoOutliers$SqrtReviews = sqrt(talijanskaVinaNoOutliers$Reviews+1)
+
+#Prikaz logaritamske promjene
+hist(francuskaVinaNoOutliers$LogReviews, 
+     main = "Broj ocjena vina iz Francuske bez outliera s logaritamskom izmjenom",
+     xlab = "Broj ocjena",
+     col = "blue",
+     breaks = 20)
+
+hist(talijanskaVinaNoOutliers$LogReviews, 
+     main = "Broj ocjena vina iz Italije bez outliera s logaritamskom izmjenom", 
+     xlab = "Broj ocjena", 
+     col = "red",
+     breaks = 20)
+
+#Prikaz promjene korjenovanjem
+hist(francuskaVinaNoOutliers$SqrtReviews, 
+     main = "Broj ocjena vina iz Francuske bez outliera s korijenskom izmjenom",
+     xlab = "Broj ocjena",
+     col = "green",
+     breaks = 20)
+
+hist(talijanskaVinaNoOutliers$SqrtReviews, 
+     main = "Broj ocjena vina iz Italije bez outliera s korijenskom izmjenom", 
+     xlab = "Broj ocjena", 
+     col = "yellow",
+     breaks = 20)
+```
+
+
+Robusnost T-testa:
+
+```{r}
+cat("Broj recenzija fr Vina:", length(francuskaVina$Reviews), "\n")
+cat("Broj recenzija ita Vina:", length(talijanskaVina$Reviews), "\n")
+```
+
+Zbog velikog broja recenzija, n~1850, možemo koristiti t-test unatoč tome da podatci ne dolaze iz normalne razdiobe,
+također koristit će se logaritam broja recenzija jer je on bliže normalnoj razdiobi od broja recenzija
+
+Također treba odrediti da li su varijance podataka jednake, to radimo F-testom o varijancama
+
+```{r}
+var(francuskaVina$LogReviews)
+var(talijanskaVina$LogReviews)
+
+var.test(francuskaVina$LogReviews, talijanskaVina$LogReviews)
+```
+
+Iz testa vidimo kako varijance nisu jednake tako da ne možemo koristiti t-test s nepoznatim ali jednakim varijancama, već moramo koristiti t-test s nepoznatim i različitim varijancama
+
+```{r}
+t.test(francuskaVina$LogReviews, talijanskaVina$LogReviews, alt="greater", var.equal = FALSE)
+```
+
+Iz izvedenog t-testa možemo vidjeti da je p-vrijednost vrlo mala, zbog čega možemo odbaciti našu hipotezu H0, tj. iz testa je vidljivo da su vina iz Francuske popularnija od vina iz Italije (imaju prosječno više recenzija)
+
+Isti test možemo provesti i na podatcima bez outliera te koristimo podatke dobivene logaritamskom promjenom:
+
+```{r}
+var(francuskaVinaNoOutliers$LogReviews)
+var(talijanskaVinaNoOutliers$LogReviews)
+
+var.test(francuskaVinaNoOutliers$LogReviews, talijanskaVinaNoOutliers$LogReviews)
+```
+Iz izvedenog testa vidimo kako su varijance različite i nepoznate te opet koristimo T-test s nepoznatim i različitim varijancama
+
+```{r}
+t.test(francuskaVinaNoOutliers$LogReviews, talijanskaVinaNoOutliers$LogReviews, alt="greater", var.equal = FALSE)
+```
+Iz provedenog testa vidimo kako je p-vrijednost 0.0004, iako je p-vrijednost veća kada smo izbacili outliere, i dalje je vrlo mala te ovdje također odbacujemo hipotezu H0 tj. prihvaćamo hipotezu H1 da su vina iz francuske popularnija.
+
+
+
