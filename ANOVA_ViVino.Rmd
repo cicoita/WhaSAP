@@ -1,0 +1,283 @@
+---
+title: "R Notebook"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+
+Učitajmo podatke:
+```{r}
+dataset_vina = read.csv("vivino_dataset.csv")
+dim(dataset_vina)
+
+```
+
+Iz kojih sve država nam dolaze podatci o vinima?
+```{r}
+unique(dataset_vina$Country)
+```
+
+Koliko zapisa o vinima imamo iz svake od tih pojedinih država?
+```{r}
+table(dataset_vina$Country)
+```
+
+Kratki pregled vrijednosti podataka:
+```{r}
+summary(dataset_vina)
+```
+
+Svaki redak predstavlja značajke o vinu:
+Winery - 	Naziv vinarije koja proizvodi vino.
+Year -	Godina berbe ili proizvodnje vina.
+WineID -	Jedinstveni identifikacijski broj vina u bazi podataka.
+Wine -	Naziv vina.
+Rating -	Prosječna ocjena vina na temelju recenzija, na ljestvici od 1.0 do 5.0.
+Reviews -	Broj recenzija koje je vino primilo.
+Price -	Cijena vina (valuta nije navedena).
+Region -	Regija u kojoj je vino proizvedeno.
+Primary_Grape -	Glavna sorta grožđa korištena u vinu.
+Natural -	Označava je li vino prirodno*.
+Country -	Država u kojoj je vino proizvedeno.
+Style -	Vrsta vina (npr. crveno, bijelo, pjenušavo).
+Country_Code -	Kôd države prema međunarodnom standardu.
+	*prirodno vino podrazumijeva proizvodnju uz minimalno intervencija, tj. bez kemikalija i pesticida
+	
+	
+Koje sve vrste vina (Style) imamo među danim podatcima?
+```{r vrste vina}
+unique(dataset_vina$Style)     # jedinstveni nazivi vrste vina
+```
+Kada podijelimo podatke na grupe prema vrsti vina, možemo vidjeti da se ukupni brojevi ocjena za svaku vrstu vina znatno razlikuju.
+
+
+
+	
+Neka od ključnih pitanja koja nas zanimaju su:
+
+- Postoji li razlika u ocjenama vina medu različitim vrstama vina?
+
+Provjerimo vizano postoje li razlike u ocjenama za različite vrste vina. 
+```{r test razlike u prihodima}
+
+# Graficki prikaz podataka
+boxplot(dataset_vina$Rating ~ dataset_vina$Style)
+
+```
+
+# ANOVA
+
+ANOVA (engl. *ANalysis Of VAriance*) je metoda kojom testiramo sredine više populacija. 
+U analizi varijance pretpostavlja se:da je ukupna varijabilnost u podatcima posljedica varijabilnosti podataka unutar svakog pojedine grupe (populacije) i varijabilnosti između različitih grupa. Varijabilnost unutar pojedinog uzorka je rezultat slučajnosti, a ako postoje razlike u sredinama populacija, one će biti odražene u varijabilnosti među grupama. Jedan od glavnih ciljeva analize varijance je ustanoviti jesu li upravo te razlike između grupa samo posljedica slučajnosti ili je statistički značajna.
+
+## Jednofaktorska ANOVA
+
+Kod jednofaktorske ANOVA-e proučavamo k različitih populacija koje se razlikuju na temelju jednog kriterija. 
+Postoji k slučajnih uzoraka (po jedan iz svake populacije) i svaki uzorak je veličine n.
+Želimo testirati:
+H0 : μ1 = μ2 = · · · = μk,
+H1: barem dvije sredine nisu jednake
+
+Pretpostavka koju podatci moraju poštivati kako bismo mogli provesti ANOVA test jest:
+   - populacije su nezavisne
+   - populacije su normalno distribuirane s očekivanjima μ1, μ2, . . . , μk
+   - populacije imaju jednake varijance σ^2.
+   
+Budući da su naši podatci jednoznačno podijeljeni u grupe na temelju vrste vina, te nema nikakvih preklapanja među grupama, zadovoljeno je svojstvo nezavisnosti populacija.
+
+Sada slijedi provjera normalne distribucije populacije i jednakosti varijance među populacijama.
+
+Provjera normalnosti može se za svaku pojedinu grupu napraviti Kolmogorov-Smirnovljevim testom ili Lillieforsovom inačicom Kolmogorov-Smirnovljevog testa. Lillieforsovom inačica KS testa koristi se kada želimo testirati da li podaci dolaze iz normalne distribucije, a ne poznaju se očekivanje i varijanca populacije
+U ovom slučaju razmatrat ćemo vrstu vina kao varijablu koja određuje grupe (populacije) i razliku u ocjenama kao zavisnu varijablu.
+
+H0: podatci dolaze iz normalne distribucije
+H1: podatci ne dolaze iz normalne distribucije
+
+Provjera normalnosti zavisne varijable ocjena na temelju svih ocjena.
+Provjera normalnosti zavisne varijable ocjena unutar grupe kreirane na temelju varijable vrste vina.
+```{r test pretpostavka - normalnost - Lillieforsova inačica KS testa}
+
+require(nortest)
+lillie.test(dataset_vina$Rating)
+
+lillie.test(dataset_vina$Rating[dataset_vina$Style=='Dessert'])
+lillie.test(dataset_vina$Rating[dataset_vina$Style=='Fortified'])
+lillie.test(dataset_vina$Rating[dataset_vina$Style=='Red'])
+lillie.test(dataset_vina$Rating[dataset_vina$Style=='Rose'])
+lillie.test(dataset_vina$Rating[dataset_vina$Style=='Sparkling'])
+lillie.test(dataset_vina$Rating[dataset_vina$Style=='White'])
+
+# Prikaz podataka podijeljenih u grupe pomoću histograma
+hist(dataset_vina$Rating[dataset_vina$Style == 'Dessert'], main = "Dessert Ratings", xlab = "Rating")
+hist(dataset_vina$Rating[dataset_vina$Style == 'Fortified'], main = "Fortified Ratings", xlab = "Rating")
+hist(dataset_vina$Rating[dataset_vina$Style == 'Red'], main = "Red Ratings", xlab = "Rating")
+hist(dataset_vina$Rating[dataset_vina$Style == 'Rose'], main = "Rose Ratings", xlab = "Rating")
+hist(dataset_vina$Rating[dataset_vina$Style == 'Sparkling'], main = "Sparkling Ratings", xlab = "Rating")
+hist(dataset_vina$Rating[dataset_vina$Style == 'White'], main = "White Ratings", xlab = "Rating")
+```
+Vidimo da su p-vrijednosti provedenog testa vrlo male (<5%) pa odbacujemo nultu hipotezu na razini značajnosti 5%.
+
+```{r test pretpostavka - normalnost - Kolmogorov-Smirnovljev test}
+ks.test(dataset_vina$Rating[dataset_vina$Style == 'Dessert'], "pnorm", 
+        mean = mean(dataset_vina$Rating[dataset_vina$Style == 'Dessert'], na.rm = TRUE), #na.rm = True odbacuje vrijednosti koje nedostaju
+        sd = sd(dataset_vina$Rating[dataset_vina$Style == 'Dessert'], na.rm = TRUE))
+
+ks.test(dataset_vina$Rating[dataset_vina$Style == 'Fortified'], "pnorm", 
+        mean = mean(dataset_vina$Rating[dataset_vina$Style == 'Fortified'], na.rm = TRUE), 
+        sd = sd(dataset_vina$Rating[dataset_vina$Style == 'Fortified'], na.rm = TRUE))
+
+ks.test(dataset_vina$Rating[dataset_vina$Style == 'Red'], "pnorm", 
+        mean = mean(dataset_vina$Rating[dataset_vina$Style == 'Red'], na.rm = TRUE), 
+        sd = sd(dataset_vina$Rating[dataset_vina$Style == 'Red'], na.rm = TRUE))
+
+ks.test(dataset_vina$Rating[dataset_vina$Style == 'Rose'], "pnorm", 
+        mean = mean(dataset_vina$Rating[dataset_vina$Style == 'Rose'], na.rm = TRUE), 
+        sd = sd(dataset_vina$Rating[dataset_vina$Style == 'Rose'], na.rm = TRUE))
+
+ks.test(dataset_vina$Rating[dataset_vina$Style == 'Sparkling'], "pnorm", 
+        mean = mean(dataset_vina$Rating[dataset_vina$Style == 'Sparkling'], na.rm = TRUE), 
+        sd = sd(dataset_vina$Rating[dataset_vina$Style == 'Sparkling'], na.rm = TRUE))
+
+ks.test(dataset_vina$Rating[dataset_vina$Style == 'White'], "pnorm", 
+        mean = mean(dataset_vina$Rating[dataset_vina$Style == 'White'], na.rm = TRUE), 
+        sd = sd(dataset_vina$Rating[dataset_vina$Style == 'White'], na.rm = TRUE))
+```
+
+Prikaz podataka podijeljenih u grupe na Q-Q plot-u:
+```{r}
+qqnorm(dataset_vina$Rating[dataset_vina$Style == "Dessert"], main = "Q-Q Plot: Dessert Ratings")
+qqline(dataset_vina$Rating[dataset_vina$Style == "Dessert"], col = "red")
+
+qqnorm(dataset_vina$Rating[dataset_vina$Style == "Fortified"], main = "Q-Q Plot: Fortified Ratings")
+qqline(dataset_vina$Rating[dataset_vina$Style == "Fortified"], col = "red")
+
+qqnorm(dataset_vina$Rating[dataset_vina$Style == "Red"],  main = "Q-Q Plot: Red Ratings")
+qqline(dataset_vina$Rating[dataset_vina$Style == "Red"], col = "red")
+
+qqnorm(dataset_vina$Rating[dataset_vina$Style == "Rose"], main = "Q-Q Plot: Rose Ratings")
+qqline(dataset_vina$Rating[dataset_vina$Style == "Rose"], col = "red")
+
+qqnorm(dataset_vina$Rating[dataset_vina$Style == "Sparkling"], main = "Q-Q Plot: Sparkling Ratings")
+qqline(dataset_vina$Rating[dataset_vina$Style == "Sparkling"], col = "red")
+
+qqnorm(dataset_vina$Rating[dataset_vina$Style == "White"], main = "Q-Q Plot: White Ratings")
+qqline(dataset_vina$Rating[dataset_vina$Style == "White"], col = "red")
+```
+Kad su veličine grupa podjednake, ANOVA je relativno robusna metoda na blaga odstupanja od pretpostavke normalnosti i homogenosti varijanci. 
+```{r ukupan broj ocjena za svaku vrstu vina}
+table(dataset_vina$Style)      # broj ocjena za svaku pojedinu vrstu vina
+ 
+library(dplyr)                 # sortitani prikaz broja ocjena za svaku pojedinu vrstu vina, sortirano silazno po broju ocjena
+dataset_vina %>%  
+  count(Style, sort = TRUE)
+```
+
+U našem slučaju veličine grupa znatno odskaču jedne od drugih, npr. vrsta vina "Red" sadrži 6776 ocjena, dok vrsta vina "Dessert" sadrži samo 144 ocjene. 
+
+
+
+
+
+
+
+Što se tiče homogenosti varijanci različitih populacija, potrebno je testirati:
+$$ \begin{aligned}
+  H_0 & : \sigma_1^2 = \sigma_2^2 = \ldots = \sigma_k^2 \\
+  H_1 & : \text{barem dvije varijance nisu iste}.
+\end{aligned} $$
+
+Navedenu hipotezu možemo testirati Bartlettovim testom. Bartlettov test u R-u implementiran je naredbom `bartlett.test()`.
+```{r test pretpostavki - homogenost varijanci}
+
+# Testiranje homogenosti varijance uzoraka Bartlettovim testom
+bartlett.test(dataset_vina$Rating ~ dataset_vina$Style)
+
+var((dataset_vina$Rating[dataset_vina$Style=='Dessert']))
+var((dataset_vina$Rating[dataset_vina$Style=='Fortified']))
+var((dataset_vina$Rating[dataset_vina$Style=='Red']))
+var((dataset_vina$Rating[dataset_vina$Style=='Rose']))
+var((dataset_vina$Rating[dataset_vina$Style=='Sparkling']))
+var((dataset_vina$Rating[dataset_vina$Style=='White']))
+
+```
+Vidimo da je p-vrijednost Bartlettovog testa vrlo mala, pa na razini značajnosti 5% možemo odbaciti nultu hipotezu, odnosno zaključujemo da barem dvije varijance nisu iste, a ova tvrdnja je vidljiva i kod ispisa varijanci.
+
+
+
+
+Bartlettov test varijance pokazuje nam da se varijance svih 6 skupina znatno različite. Možemo vidjeti i da su varijance vrsta vina: Fortified, Red i Sparkling relativno slične, te da su varijance vrsta vina: Dessert, Rose i White također međusobno slične.Zbog toga, vrste vina dijelimo u dva podskupa:
+
+```{r Bartlettovi testovi za podskupine}
+group_high_variance <- subset(dataset_vina, Style %in% c("Fortified", "Red", "Sparkling"))
+group_low_variance <- subset(dataset_vina, Style %in% c("Dessert","Rose", "White"))
+
+# Bartlettov test homogenosti varijanci na podskupovima
+bartlett_high <- bartlett.test(Rating ~ Style, data = group_high_variance)
+bartlett_low <- bartlett.test(Rating ~ Style, data = group_low_variance)
+
+print(bartlett_high)  
+print(bartlett_low)
+```
+Vidimo da je p-vrijednost Barlettovog testa kod podgrupe koja sadrži stilove: "Fortified", "Red", "Sparkling", vrlo visoka, zbog čega ne možemo odbaciti nultu hipotezu, te ima smisla provesti ANOVA test na ovoj skupini podataka.
+
+Vidimo da je p-vrijednost Barlettovog testa kod podgrupe koja sadrži stilove: "Dessert","Rose", "White", vrlo niska, blizu vrijednosti odbacivanja nulte hipoteze, zbog čega ne odbacivanju nulte hipoteze moramo pristupiti vrlo oprezno.
+
+```{r Bartlettov test za novu podskupinu testovi za podskupine}
+group_low_variance_2 <- subset(dataset_vina, Style %in% c("Dessert", "White"))
+
+# Bartlettov test homogenosti varijanci na novom podskupu
+bartlett_low <- bartlett.test(Rating ~ Style, data = group_low_variance_2)
+
+print(bartlett_low)
+```
+Kada odstranimo vrijednosti za "Rose" iz druge podskupine, možemo vidjeti da p-vrijednost Bartlettovog testa naraste na 0.9632 te u ovoj podskupini ne možemo odbaciti nultu hipotezu, te ima smisla provesti ANOVA test. 
+
+
+```{r ANOVA test na podskupinama}
+anova_high <- aov(Rating ~ Style, data = group_high_variance)
+summary(anova_high)
+
+anova_low <- aov(Rating ~ Style, data = group_low_variance)
+summary(anova_low)
+
+anova_low_2 <- aov(Rating ~ Style, data = group_low_variance_2)
+summary(anova_low_2)
+```
+Vrlo mala p-vrijednost (<0.001) kod provođenja ANOVA testa implicira da postoji statistički značajna razlika u ocjenama između vrsta vina Fortified, Red i Sparkling.
+Vrlo mala p-vrijednost (<0.001) kod provođenja ANOVA testa implicira da postoji statistički značajna razlika u ocjenama između vrsta vina Dessert, Rose i White.
+Vrlo mala p-vrijednost (<0.001) kod provođenja ANOVA testa implicira da postoji statistički značajna razlika u ocjenama između vrsta vina Dessert i White
+
+Zaključak: Svi ANOVA testovi pokazali su da postoji statistički značajna razlika među različitim podgrupama vrsta vina, odnosno možemo odgovoriti na početno pitanje i zaključiti da postoji razlika u ocjenama među različitim vrstama vina.
+
+
+
+Grafički prikaz sugerira da postoji jasna razlika između grupa, što potvrđuje i ANOVA. Kako bismo procijenili model koji pomoću varijable o vrsti vina objašnjava ocjene?
+```{r linearni model}
+
+# Linearni model
+model = lm(Rating ~ Style, data = dataset_vina)
+summary(model)
+```
+Svi koeficijenti su statistički značajni (p < 0.001), što znači da je mala šansa da su razlike između referencirane kategorije vrste vina (Dessert) i ostalih vrsta vina slučajne.
+
+
+```{r}
+# Provedba ANOVA za usporedbu ocjena ovisno o vrsti vina
+anova_result <- aov(Rating ~ Style, data = dataset_vina)
+summary(anova_result)
+```
+P-vrijednost (< 2.2e-16) pokazuje da varijabla vrste vina (Style) ima statisički značajan utjecaj na ocjene (Rating).
+
+Kruskal-Wallisov test je neparametarska alternativa (jednofaktorskoj)analizi varijance - "neparametarska ANOVA"
+Njegove hipoteze su:
+H0 : medijani distribucija svih uzoraka su jednaki 
+H1 : barem dva medijana nisu jednaka
+```{r}
+# Provedba Kruskal-Wallis testa za usporedbu ocjena ovisno o vrsti vina
+kruskal_test_result <- kruskal.test(Rating ~ Style, data = dataset_vina)
+print(kruskal_test_result)
+
+```
+
+Budući da je p-vrijednost vrlo mala, možemo odbaciti nultu hipotezu. To znači da postoji značajan dokaz da se ocjene razlikuju u barem jednom paru vrsta vina. Kruskal-Wallisov test nam ne govori koje se grupe razlikuju.
