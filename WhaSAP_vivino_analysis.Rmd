@@ -1,0 +1,757 @@
+---
+title: "WhaSAP_vivino_analysis"
+author: ""
+date: "2025-01-25"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+```
+
+Učitajmo podatke:
+```{r}
+dataset_vina = read.csv("vivino dataset.csv")
+dim(dataset_vina)
+
+```
+
+Iz kojih sve država nam dolaze podatci o vinima?
+```{r}
+unique(dataset_vina$Country)
+```
+
+Koliko zapisa o vinima imamo iz svake od tih pojedinih država?
+```{r}
+table(dataset_vina$Country)
+```
+
+Kratki pregled vrijednosti podataka:
+```{r}
+summary(dataset_vina)
+```
+
+Svaki redak predstavlja značajke o vinu:
+Winery - 	Naziv vinarije koja proizvodi vino.
+Year -	Godina berbe ili proizvodnje vina.
+WineID -	Jedinstveni identifikacijski broj vina u bazi podataka.
+Wine -	Naziv vina.
+Rating -	Prosječna ocjena vina na temelju recenzija, na ljestvici od 1.0 do 5.0.
+Reviews -	Broj recenzija koje je vino primilo.
+Price -	Cijena vina (valuta nije navedena).
+Region -	Regija u kojoj je vino proizvedeno.
+Primary_Grape -	Glavna sorta grožđa korištena u vinu.
+Natural -	Označava je li vino prirodno*.
+Country -	Država u kojoj je vino proizvedeno.
+Style -	Vrsta vina (npr. crveno, bijelo, pjenušavo).
+Country_Code -	Kôd države prema međunarodnom standardu.
+	*prirodno vino podrazumijeva proizvodnju uz minimalno intervencija, tj. bez kemikalija i pesticida
+	
+	
+Koje sve vrste vina (Style) imamo među danim podatcima?
+```{r vrste vina}
+unique(dataset_vina$Style)     # jedinstveni nazivi vrste vina
+```
+Kada podijelimo podatke na grupe prema vrsti vina, možemo vidjeti da se ukupni brojevi ocjena za svaku vrstu vina znatno razlikuju.
+
+
+
+	
+Neka od ključnih pitanja koja nas zanimaju su:
+
+- Postoji li razlika u ocjenama vina medu različitim vrstama vina?
+
+Provjerimo vizano postoje li razlike u ocjenama za različite vrste vina. 
+```{r test razlike u prihodima}
+
+# Graficki prikaz podataka
+boxplot(dataset_vina$Rating ~ dataset_vina$Style)
+
+```
+
+# ANOVA
+
+ANOVA (engl. *ANalysis Of VAriance*) je metoda kojom testiramo sredine više populacija. 
+U analizi varijance pretpostavlja se:da je ukupna varijabilnost u podatcima posljedica varijabilnosti podataka unutar svakog pojedine grupe (populacije) i varijabilnosti između različitih grupa. Varijabilnost unutar pojedinog uzorka je rezultat slučajnosti, a ako postoje razlike u sredinama populacija, one će biti odražene u varijabilnosti među grupama. Jedan od glavnih ciljeva analize varijance je ustanoviti jesu li upravo te razlike između grupa samo posljedica slučajnosti ili je statistički značajna.
+
+## Jednofaktorska ANOVA
+
+Kod jednofaktorske ANOVA-e proučavamo k različitih populacija koje se razlikuju na temelju jednog kriterija. 
+Postoji k slučajnih uzoraka (po jedan iz svake populacije) i svaki uzorak je veličine n.
+Želimo testirati:
+H0 : μ1 = μ2 = · · · = μk,
+H1: barem dvije sredine nisu jednake
+
+Pretpostavka koju podatci moraju poštivati kako bismo mogli provesti ANOVA test jest:
+   - populacije su nezavisne
+   - populacije su normalno distribuirane s očekivanjima μ1, μ2, . . . , μk
+   - populacije imaju jednake varijance σ^2.
+   
+Budući da su naši podatci jednoznačno podijeljeni u grupe na temelju vrste vina, te nema nikakvih preklapanja među grupama, zadovoljeno je svojstvo nezavisnosti populacija.
+
+Sada slijedi provjera normalne distribucije populacije i jednakosti varijance među populacijama.
+
+Provjera normalnosti može se za svaku pojedinu grupu napraviti Kolmogorov-Smirnovljevim testom ili Lillieforsovom inačicom Kolmogorov-Smirnovljevog testa. Lillieforsovom inačica KS testa koristi se kada želimo testirati da li podaci dolaze iz normalne distribucije, a ne poznaju se očekivanje i varijanca populacije
+U ovom slučaju razmatrat ćemo vrstu vina kao varijablu koja određuje grupe (populacije) i razliku u ocjenama kao zavisnu varijablu.
+
+H0: podatci dolaze iz normalne distribucije
+H1: podatci ne dolaze iz normalne distribucije
+
+Provjera normalnosti zavisne varijable ocjena na temelju svih ocjena.
+Provjera normalnosti zavisne varijable ocjena unutar grupe kreirane na temelju varijable vrste vina.
+```{r test pretpostavka - normalnost - Lillieforsova inačica KS testa}
+
+require(nortest)
+lillie.test(dataset_vina$Rating)
+
+lillie.test(dataset_vina$Rating[dataset_vina$Style=='Dessert'])
+lillie.test(dataset_vina$Rating[dataset_vina$Style=='Fortified'])
+lillie.test(dataset_vina$Rating[dataset_vina$Style=='Red'])
+lillie.test(dataset_vina$Rating[dataset_vina$Style=='Rose'])
+lillie.test(dataset_vina$Rating[dataset_vina$Style=='Sparkling'])
+lillie.test(dataset_vina$Rating[dataset_vina$Style=='White'])
+
+# Prikaz podataka podijeljenih u grupe pomoću histograma
+hist(dataset_vina$Rating[dataset_vina$Style == 'Dessert'], main = "Dessert Ratings", xlab = "Rating")
+hist(dataset_vina$Rating[dataset_vina$Style == 'Fortified'], main = "Fortified Ratings", xlab = "Rating")
+hist(dataset_vina$Rating[dataset_vina$Style == 'Red'], main = "Red Ratings", xlab = "Rating")
+hist(dataset_vina$Rating[dataset_vina$Style == 'Rose'], main = "Rose Ratings", xlab = "Rating")
+hist(dataset_vina$Rating[dataset_vina$Style == 'Sparkling'], main = "Sparkling Ratings", xlab = "Rating")
+hist(dataset_vina$Rating[dataset_vina$Style == 'White'], main = "White Ratings", xlab = "Rating")
+```
+Vidimo da su p-vrijednosti provedenog testa vrlo male (<5%) pa odbacujemo nultu hipotezu na razini značajnosti 5%.
+
+```{r test pretpostavka - normalnost - Kolmogorov-Smirnovljev test}
+ks.test(dataset_vina$Rating[dataset_vina$Style == 'Dessert'], "pnorm", 
+        mean = mean(dataset_vina$Rating[dataset_vina$Style == 'Dessert'], na.rm = TRUE), #na.rm = True odbacuje vrijednosti koje nedostaju
+        sd = sd(dataset_vina$Rating[dataset_vina$Style == 'Dessert'], na.rm = TRUE))
+
+ks.test(dataset_vina$Rating[dataset_vina$Style == 'Fortified'], "pnorm", 
+        mean = mean(dataset_vina$Rating[dataset_vina$Style == 'Fortified'], na.rm = TRUE), 
+        sd = sd(dataset_vina$Rating[dataset_vina$Style == 'Fortified'], na.rm = TRUE))
+
+ks.test(dataset_vina$Rating[dataset_vina$Style == 'Red'], "pnorm", 
+        mean = mean(dataset_vina$Rating[dataset_vina$Style == 'Red'], na.rm = TRUE), 
+        sd = sd(dataset_vina$Rating[dataset_vina$Style == 'Red'], na.rm = TRUE))
+
+ks.test(dataset_vina$Rating[dataset_vina$Style == 'Rose'], "pnorm", 
+        mean = mean(dataset_vina$Rating[dataset_vina$Style == 'Rose'], na.rm = TRUE), 
+        sd = sd(dataset_vina$Rating[dataset_vina$Style == 'Rose'], na.rm = TRUE))
+
+ks.test(dataset_vina$Rating[dataset_vina$Style == 'Sparkling'], "pnorm", 
+        mean = mean(dataset_vina$Rating[dataset_vina$Style == 'Sparkling'], na.rm = TRUE), 
+        sd = sd(dataset_vina$Rating[dataset_vina$Style == 'Sparkling'], na.rm = TRUE))
+
+ks.test(dataset_vina$Rating[dataset_vina$Style == 'White'], "pnorm", 
+        mean = mean(dataset_vina$Rating[dataset_vina$Style == 'White'], na.rm = TRUE), 
+        sd = sd(dataset_vina$Rating[dataset_vina$Style == 'White'], na.rm = TRUE))
+```
+
+Prikaz podataka podijeljenih u grupe na Q-Q plot-u:
+```{r}
+qqnorm(dataset_vina$Rating[dataset_vina$Style == "Dessert"], main = "Q-Q Plot: Dessert Ratings")
+qqline(dataset_vina$Rating[dataset_vina$Style == "Dessert"], col = "red")
+
+qqnorm(dataset_vina$Rating[dataset_vina$Style == "Fortified"], main = "Q-Q Plot: Fortified Ratings")
+qqline(dataset_vina$Rating[dataset_vina$Style == "Fortified"], col = "red")
+
+qqnorm(dataset_vina$Rating[dataset_vina$Style == "Red"],  main = "Q-Q Plot: Red Ratings")
+qqline(dataset_vina$Rating[dataset_vina$Style == "Red"], col = "red")
+
+qqnorm(dataset_vina$Rating[dataset_vina$Style == "Rose"], main = "Q-Q Plot: Rose Ratings")
+qqline(dataset_vina$Rating[dataset_vina$Style == "Rose"], col = "red")
+
+qqnorm(dataset_vina$Rating[dataset_vina$Style == "Sparkling"], main = "Q-Q Plot: Sparkling Ratings")
+qqline(dataset_vina$Rating[dataset_vina$Style == "Sparkling"], col = "red")
+
+qqnorm(dataset_vina$Rating[dataset_vina$Style == "White"], main = "Q-Q Plot: White Ratings")
+qqline(dataset_vina$Rating[dataset_vina$Style == "White"], col = "red")
+```
+Kad su veličine grupa podjednake, ANOVA je relativno robusna metoda na blaga odstupanja od pretpostavke normalnosti i homogenosti varijanci. 
+```{r ukupan broj ocjena za svaku vrstu vina}
+table(dataset_vina$Style)      # broj ocjena za svaku pojedinu vrstu vina
+ 
+library(dplyr)                 # sortitani prikaz broja ocjena za svaku pojedinu vrstu vina, sortirano silazno po broju ocjena
+dataset_vina %>%  
+  count(Style, sort = TRUE)
+```
+
+U našem slučaju veličine grupa znatno odskaču jedne od drugih, npr. vrsta vina "Red" sadrži 6776 ocjena, dok vrsta vina "Dessert" sadrži samo 144 ocjene. 
+
+
+
+
+
+
+
+Što se tiče homogenosti varijanci različitih populacija, potrebno je testirati:
+$$ \begin{aligned}
+  H_0 & : \sigma_1^2 = \sigma_2^2 = \ldots = \sigma_k^2 \\
+  H_1 & : \text{barem dvije varijance nisu iste}.
+\end{aligned} $$
+
+Navedenu hipotezu možemo testirati Bartlettovim testom. Bartlettov test u R-u implementiran je naredbom `bartlett.test()`.
+```{r test pretpostavki - homogenost varijanci}
+
+# Testiranje homogenosti varijance uzoraka Bartlettovim testom
+bartlett.test(dataset_vina$Rating ~ dataset_vina$Style)
+
+var((dataset_vina$Rating[dataset_vina$Style=='Dessert']))
+var((dataset_vina$Rating[dataset_vina$Style=='Fortified']))
+var((dataset_vina$Rating[dataset_vina$Style=='Red']))
+var((dataset_vina$Rating[dataset_vina$Style=='Rose']))
+var((dataset_vina$Rating[dataset_vina$Style=='Sparkling']))
+var((dataset_vina$Rating[dataset_vina$Style=='White']))
+
+```
+Vidimo da je p-vrijednost Bartlettovog testa vrlo mala, pa na razini značajnosti 5% možemo odbaciti nultu hipotezu, odnosno zaključujemo da barem dvije varijance nisu iste, a ova tvrdnja je vidljiva i kod ispisa varijanci.
+
+
+
+
+Bartlettov test varijance pokazuje nam da se varijance svih 6 skupina znatno različite. Možemo vidjeti i da su varijance vrsta vina: Fortified, Red i Sparkling relativno slične, te da su varijance vrsta vina: Dessert, Rose i White također međusobno slične.Zbog toga, vrste vina dijelimo u dva podskupa:
+
+```{r Bartlettovi testovi za podskupine}
+group_high_variance <- subset(dataset_vina, Style %in% c("Fortified", "Red", "Sparkling"))
+group_low_variance <- subset(dataset_vina, Style %in% c("Dessert","Rose", "White"))
+
+# Bartlettov test homogenosti varijanci na podskupovima
+bartlett_high <- bartlett.test(Rating ~ Style, data = group_high_variance)
+bartlett_low <- bartlett.test(Rating ~ Style, data = group_low_variance)
+
+print(bartlett_high)  
+print(bartlett_low)
+```
+Vidimo da je p-vrijednost Barlettovog testa kod podgrupe koja sadrži stilove: "Fortified", "Red", "Sparkling", vrlo visoka, zbog čega ne možemo odbaciti nultu hipotezu, te ima smisla provesti ANOVA test na ovoj skupini podataka.
+
+Vidimo da je p-vrijednost Barlettovog testa kod podgrupe koja sadrži stilove: "Dessert","Rose", "White", vrlo niska, blizu vrijednosti odbacivanja nulte hipoteze, zbog čega ne odbacivanju nulte hipoteze moramo pristupiti vrlo oprezno.
+
+```{r Bartlettov test za novu podskupinu testovi za podskupine}
+group_low_variance_2 <- subset(dataset_vina, Style %in% c("Dessert", "White"))
+
+# Bartlettov test homogenosti varijanci na novom podskupu
+bartlett_low <- bartlett.test(Rating ~ Style, data = group_low_variance_2)
+
+print(bartlett_low)
+```
+Kada odstranimo vrijednosti za "Rose" iz druge podskupine, možemo vidjeti da p-vrijednost Bartlettovog testa naraste na 0.9632 te u ovoj podskupini ne možemo odbaciti nultu hipotezu, te ima smisla provesti ANOVA test. 
+
+
+```{r ANOVA test na podskupinama}
+anova_high <- aov(Rating ~ Style, data = group_high_variance)
+summary(anova_high)
+
+anova_low <- aov(Rating ~ Style, data = group_low_variance)
+summary(anova_low)
+
+anova_low_2 <- aov(Rating ~ Style, data = group_low_variance_2)
+summary(anova_low_2)
+```
+Vrlo mala p-vrijednost (<0.001) kod provođenja ANOVA testa implicira da postoji statistički značajna razlika u ocjenama između vrsta vina Fortified, Red i Sparkling.
+Vrlo mala p-vrijednost (<0.001) kod provođenja ANOVA testa implicira da postoji statistički značajna razlika u ocjenama između vrsta vina Dessert, Rose i White.
+Vrlo mala p-vrijednost (<0.001) kod provođenja ANOVA testa implicira da postoji statistički značajna razlika u ocjenama između vrsta vina Dessert i White
+
+Zaključak: Svi ANOVA testovi pokazali su da postoji statistički značajna razlika među različitim podgrupama vrsta vina, odnosno možemo odgovoriti na početno pitanje i zaključiti da postoji razlika u ocjenama među različitim vrstama vina.
+
+
+
+Grafički prikaz sugerira da postoji jasna razlika između grupa, što potvrđuje i ANOVA. Kako bismo procijenili model koji pomoću varijable o vrsti vina objašnjava ocjene?
+```{r linearni model}
+
+# Linearni model
+model = lm(Rating ~ Style, data = dataset_vina)
+summary(model)
+```
+Svi koeficijenti su statistički značajni (p < 0.001), što znači da je mala šansa da su razlike između referencirane kategorije vrste vina (Dessert) i ostalih vrsta vina slučajne.
+
+
+```{r}
+# Provedba ANOVA za usporedbu ocjena ovisno o vrsti vina
+anova_result <- aov(Rating ~ Style, data = dataset_vina)
+summary(anova_result)
+```
+P-vrijednost (< 2.2e-16) pokazuje da varijabla vrste vina (Style) ima statisički značajan utjecaj na ocjene (Rating).
+
+Kruskal-Wallisov test je neparametarska alternativa (jednofaktorskoj)analizi varijance - "neparametarska ANOVA"
+Njegove hipoteze su:
+H0 : medijani distribucija svih uzoraka su jednaki 
+H1 : barem dva medijana nisu jednaka
+```{r}
+# Provedba Kruskal-Wallis testa za usporedbu ocjena ovisno o vrsti vina
+kruskal_test_result <- kruskal.test(Rating ~ Style, data = dataset_vina)
+print(kruskal_test_result)
+
+```
+
+Budući da je p-vrijednost vrlo mala, možemo odbaciti nultu hipotezu. To znači da postoji značajan dokaz da se ocjene razlikuju u barem jednom paru vrsta vina. Kruskal-Wallisov test nam ne govori koje se grupe razlikuju.
+
+
+
+
+
+
+
+
+
+
+
+
+hi-kvadrat test za nezavisnost je test kojime možemo
+izračunati jesu li dvije kategorijske vrijednosti
+nezavisne ili povezane.
+To se odrađuje uspoređivanjem očekivanja i očitanog.
+Pošto se u zadatku od nas traži da testiramo povezanost
+vrste vina i prirodnosti vina, moramo koristiti 
+hi-kvadrat test da odredimo povezanost.
+
+```{r}
+str(dataset_vina)
+
+contingency_table <- table(dataset_vina$Style, dataset_vina$Natural)
+
+#podatci hi-kvadrat testa prikazuju se tablicom
+print(contingency_table)
+
+chi_sq_res <- chisq.test(contingency_table)
+
+print(chi_sq_res)
+
+
+
+contingency_df <- as.data.frame(contingency_table)
+
+ggplot(contingency_df, aes(x = Var1, y = Freq, fill = Var2)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(x = "Style", y = "Count", fill = "Natural") +
+  theme_minimal() +
+  ggtitle("Contingency Table Visualization")
+
+
+
+```
+
+rezultat: X-squared = 43.174, df = 5, p-value = 3.407e-08
+pošto je p<0.5 možemo odbaciti hipotezu 
+da su vrste vina povezane s da li su prirodne
+i prihvaćamo hipotezu da je to nepovezano kao točnu
+
+
+
+PITANJE: Jesu li vina iz Francuske popularnija (imaju više recenzija) od onih iz italije?
+
+Hipoteze:
+  H0: yfr = yita
+  H1: yfr > yita
+
+Prikaz podataka o broju recenzija vina
+
+```{r}
+francuskaVina = dataset_vina[dataset_vina$Country == "France",]
+talijanskaVina = dataset_vina[dataset_vina$Country == "Italy",]
+cat("Prosječan broj recenzija Francuskih vina:", mean(francuskaVina$Reviews), "\n")
+cat("Prosječan broj recenzija Talijanskih vina:", mean(talijanskaVina$Reviews), "\n")
+```
+
+Prikaz podataka i provjera normalnosti:
+
+```{r}
+hist(francuskaVina$Reviews, 
+     main = "Broj ocjena vina iz Francuske",
+     xlab = "Broj ocjena",
+     col = "blue",
+     breaks = 10)
+
+hist(talijanskaVina$Reviews,
+     main = "Broj ocjena vina iz Italije",
+     xlab = "Broj ocjena",
+     col = "blue",
+     breaks = 20)
+```
+Iz histograma je vidljivo kako podatci nisu normalno distribuirani, zbog čega se primjenjuje logaritamska funkcija u pokušaju normalizacije podataka.
+
+Prikaz podataka i provjera normalnosti logaritma broja recenzija
+
+```{r}
+francuskaVina$LogReviews = log(francuskaVina$Reviews + 1)
+talijanskaVina$LogReviews = log(talijanskaVina$Reviews + 1)
+
+hist(francuskaVina$LogReviews, 
+     main = "Broj ocjena vina iz Francuske",
+     xlab = "Broj ocjena",
+     col = "blue",
+     breaks = 20)
+
+hist(talijanskaVina$LogReviews,
+     main = "Broj ocjena vina iz Italije",
+     xlab = "Broj ocjena",
+     col = "blue",
+     breaks = 20)
+```
+
+Provjera dobivenih rezultata Kolmogorov-Smirnovov testom
+Hipoteze:
+  H0: podatci su iz normalne razdiobe
+  H1: podatci nisu iz normalne razdiobe
+
+```{r}
+france_data = francuskaVina$LogReviews
+italy_data = talijanskaVina$LogReviews
+
+ks.test(france_data, "pnorm", mean = mean(france_data), sd = sd(france_data))
+ks.test(italy_data, "pnorm", mean = mean(italy_data), sd = sd(italy_data))
+
+qqnorm(france_data, main = "Francuska Q-Q grafikon")
+qqline(france_data, col = "blue")
+
+qqnorm(italy_data, main = "Italija Q-Q grafikon")
+qqline(italy_data, col = "red")
+
+```
+
+Iz KS testa vidimo da je p-vrijednost vrlo mala, što znači da možemo odbaciti hipotezu H0, tj. logaritam broja recenzija ne zadovoljava normalnu distribuciju.
+
+Druga transformacija podataka dobivena je iz korijena broja recenzija:
+
+```{r}
+francuskaVina$SqrtReviews = sqrt(francuskaVina$Reviews)
+talijanskaVina$SqrtReviews = sqrt(talijanskaVina$Reviews)
+
+hist(francuskaVina$SqrtReviews,
+     main = "Broj recenzija Francuskog vina",
+     xlab = "Broj recenzija",
+     col = "blue",
+     breaks = 20)
+
+hist(talijanskaVina$SqrtReviews,
+     main = "Broj recenzija Talijanskog vina",
+     xlab = "Broj recenzija",
+     col = "blue",
+     breaks = 20)
+
+```
+
+Korijen broja recenzija također ne dolazi iz normalne distribucije.
+
+Izbacivanje outliera:
+```{r}
+
+#Izbacivanje outliera za francuska vina
+Q1_France = quantile(francuskaVina$Reviews, 0.25)
+Q3_France = quantile(francuskaVina$Reviews, 0.75)
+IQR_France = Q3_France - Q1_France
+donjaGranicaFrance = Q1_France - 1.5 * IQR_France
+gornjaGranicaFrance = Q3_France + 1.5 * IQR_France
+francuskaVinaNoOutliers = francuskaVina[francuskaVina$Reviews >= donjaGranicaFrance & francuskaVina$Reviews <= gornjaGranicaFrance, ]
+
+#Izbacivanje outliera za talijanska vina
+Q1_Italy = quantile(talijanskaVina$Reviews, 0.25)
+Q3_Italy = quantile(talijanskaVina$Reviews, 0.75)
+IRQ_Italy = Q3_Italy - Q1_Italy
+donjaGranicaItaly = Q1_Italy - 1.5*IRQ_Italy
+gornjaGranicaItaly = Q3_Italy + 1.5*IRQ_Italy
+talijanskaVinaNoOutliers = talijanskaVina[talijanskaVina$Reviews >= donjaGranicaItaly & talijanskaVina$Reviews <= gornjaGranicaItaly, ]
+
+# Histogram
+hist(francuskaVinaNoOutliers$Reviews, 
+     main = "Broj ocjena vina iz Francuske bez outliera",
+     xlab = "Broj ocjena",
+     col = "blue",
+     breaks = 20)
+
+hist(talijanskaVinaNoOutliers$Reviews, 
+     main = "Broj ocjena vina iz Italije bez outliera", 
+     xlab = "Broj ocjena", 
+     col = "red",
+     breaks = 20)
+```
+
+Izbacivanjem outliera bliže smo normalnoj razdiobi nego prije, ali podatci i dalje ne slijede normalnu razdiobu.
+Za pokušaj postizanja normalne razdiobe primjenjuje se logaritamska i korijen funkcija na podatke bez outliera:
+
+```{r}
+francuskaVinaNoOutliers$LogReviews = log(francuskaVinaNoOutliers$Reviews+1)
+talijanskaVinaNoOutliers$LogReviews = log(talijanskaVinaNoOutliers$Reviews+1)
+
+francuskaVinaNoOutliers$SqrtReviews = sqrt(francuskaVinaNoOutliers$Reviews+1)
+talijanskaVinaNoOutliers$SqrtReviews = sqrt(talijanskaVinaNoOutliers$Reviews+1)
+
+#Prikaz logaritamske promjene
+hist(francuskaVinaNoOutliers$LogReviews, 
+     main = "Broj ocjena vina iz Francuske bez outliera s logaritamskom izmjenom",
+     xlab = "Broj ocjena",
+     col = "blue",
+     breaks = 20)
+
+hist(talijanskaVinaNoOutliers$LogReviews, 
+     main = "Broj ocjena vina iz Italije bez outliera s logaritamskom izmjenom", 
+     xlab = "Broj ocjena", 
+     col = "red",
+     breaks = 20)
+
+#Prikaz promjene korjenovanjem
+hist(francuskaVinaNoOutliers$SqrtReviews, 
+     main = "Broj ocjena vina iz Francuske bez outliera s korijenskom izmjenom",
+     xlab = "Broj ocjena",
+     col = "green",
+     breaks = 20)
+
+hist(talijanskaVinaNoOutliers$SqrtReviews, 
+     main = "Broj ocjena vina iz Italije bez outliera s korijenskom izmjenom", 
+     xlab = "Broj ocjena", 
+     col = "yellow",
+     breaks = 20)
+```
+
+
+Robusnost T-testa:
+
+```{r}
+cat("Broj recenzija fr Vina:", length(francuskaVina$Reviews), "\n")
+cat("Broj recenzija ita Vina:", length(talijanskaVina$Reviews), "\n")
+```
+
+Zbog velikog broja recenzija, n~1850, možemo koristiti t-test unatoč tome da podatci ne dolaze iz normalne razdiobe,
+također koristit će se logaritam broja recenzija jer je on bliže normalnoj razdiobi od broja recenzija
+
+Također treba odrediti da li su varijance podataka jednake, to radimo F-testom o varijancama
+
+```{r}
+var(francuskaVina$LogReviews)
+var(talijanskaVina$LogReviews)
+
+var.test(francuskaVina$LogReviews, talijanskaVina$LogReviews)
+```
+
+Iz testa vidimo kako varijance nisu jednake tako da ne možemo koristiti t-test s nepoznatim ali jednakim varijancama, već moramo koristiti t-test s nepoznatim i različitim varijancama
+
+```{r}
+t.test(francuskaVina$LogReviews, talijanskaVina$LogReviews, alt="greater", var.equal = FALSE)
+```
+
+Iz izvedenog t-testa možemo vidjeti da je p-vrijednost vrlo mala, zbog čega možemo odbaciti našu hipotezu H0, tj. iz testa je vidljivo da su vina iz Francuske popularnija od vina iz Italije (imaju prosječno više recenzija)
+
+Isti test možemo provesti i na podatcima bez outliera te koristimo podatke dobivene logaritamskom promjenom:
+
+```{r}
+var(francuskaVinaNoOutliers$LogReviews)
+var(talijanskaVinaNoOutliers$LogReviews)
+
+var.test(francuskaVinaNoOutliers$LogReviews, talijanskaVinaNoOutliers$LogReviews)
+```
+Iz izvedenog testa vidimo kako su varijance različite i nepoznate te opet koristimo T-test s nepoznatim i različitim varijancama
+
+```{r}
+t.test(francuskaVinaNoOutliers$LogReviews, talijanskaVinaNoOutliers$LogReviews, alt="greater", var.equal = FALSE)
+```
+Iz provedenog testa vidimo kako je p-vrijednost 0.0004, iako je p-vrijednost veća kada smo izbacili outliere, i dalje je vrlo mala te ovdje također odbacujemo hipotezu H0 tj. prihvaćamo hipotezu H1 da su vina iz francuske popularnija.
+
+
+
+
+
+
+
+Učitavnje podataka iz tablice.
+```{r data}
+dataset_vina = read.csv('vivino dataset.csv',header = T, sep = ',')
+summary(dataset_vina)
+```
+Izbacivanje redaka koji su bez vrijednosti ili nevaljane vrijednosti.
+```{r}
+dataset_vina <- dataset_vina[dataset_vina$Year != "N.V." & !is.na(dataset_vina$Price) & dataset_vina$Year != '', ]
+```
+
+Za predviđanje cijena vina koristit ćemo linearnu regresiju, no prvo je potrebno promotriti podatke kako bih znali kako konstruirat model.
+Različiti se prikazi koriste za numeričke i kategorijske varijable. Već se iz samih grafova vidi da postoje neke zavisnosti među varijablama, npr. vidi se da će vjerojatno s rastom ocjene rasti i cijena, dok broj recenzija ne izgleda da radi toliku razliku u cijeni.
+```{r scatter plots}
+dataset_vina$Age = 2025 - as.numeric(dataset_vina$Year)
+fit.age = lm(Price~Age,data=dataset_vina)
+
+plot(dataset_vina$Age,dataset_vina$Price)
+lines(dataset_vina$Age,fit.age$fitted.values,col='red')
+
+fit.rating = lm(Price~Rating,data=dataset_vina)
+
+plot(dataset_vina$Rating,dataset_vina$Price)
+lines(dataset_vina$Rating,fit.rating$fitted.values,col='red')
+
+fit.reviews = lm(Price~Reviews,data=dataset_vina)
+
+plot(dataset_vina$Reviews,dataset_vina$Price)
+lines(dataset_vina$Reviews,fit.reviews$fitted.values,col='red')
+
+boxplot(Price~Primary_Grape,data=dataset_vina)
+boxplot(Price~Natural,data=dataset_vina)
+boxplot(Price~Style,data=dataset_vina)
+boxplot(Price~Country_Code,data=dataset_vina)
+
+```
+
+
+Linearna regresija je jako osjetljiva na stršeče vrijednosti pa ćemo variajblu Price provući kroz logaritamsku funkciju kako bi se umanjio njihov utjecaj. Pomoću histograma možemo vidjeti da provlaćenjem cijene kroz logaritamsku funkciju distribucija više nalikuje normalnoj.
+```{r}
+hist(dataset_vina$Price)
+
+dataset_vina$Log_Price <- log(dataset_vina$Price)
+
+hist(dataset_vina$Log_Price)
+```
+Sada se bolje vidi kako numeričke varijable (Age, Reviews i Ratings) utjeću na cijenu vina. Uz to su dodani još grafovi s varijablama Age i Reviews provućenim kroz log.
+```{r lin plot}
+
+dataset_vina$Age = 2025 - as.numeric(dataset_vina$Year)
+fit.age = lm(Log_Price~Age,data=dataset_vina)
+
+plot(dataset_vina$Age,dataset_vina$Log_Price)
+lines(dataset_vina$Age,fit.age$fitted.values,col='red')
+
+
+dataset_vina$Log_Age = log(dataset_vina$Age)
+fit.age = lm(Log_Price~Log_Age,data=dataset_vina)
+
+plot(dataset_vina$Log_Age,dataset_vina$Log_Price)
+lines(dataset_vina$Log_Age,fit.age$fitted.values,col='red')
+
+
+fit.rating = lm(Log_Price~Rating,data=dataset_vina)
+
+plot(dataset_vina$Rating,dataset_vina$Log_Price)
+lines(dataset_vina$Rating,fit.rating$fitted.values,col='red')
+
+fit.reviews = lm(Log_Price~Reviews,data=dataset_vina)
+
+plot(dataset_vina$Reviews,dataset_vina$Log_Price)
+lines(dataset_vina$Reviews,fit.reviews$fitted.values,col='red')
+
+dataset_vina$Log_Reviews = log(dataset_vina$Reviews)
+fit.reviews = lm(Log_Price~Log_Reviews,data=dataset_vina)
+
+plot(dataset_vina$Log_Reviews,dataset_vina$Log_Price)
+lines(dataset_vina$Log_Reviews,fit.reviews$fitted.values,col='red')
+```
+Korelacijska matrica prikazuje povezanost između nezavisnih varijabli, što nam je bitno jer linearna regresiija loše funkcionira kada su nezavisne varijable jako korelirane, stoga je u tom slućaju dobra praksa izbaciti one koje su višak.
+```{r}
+
+plot(dataset_vina$Rating, dataset_vina$Age)
+plot(dataset_vina$Rating, dataset_vina$Reviews)
+plot(dataset_vina$Age, dataset_vina$Reviews)
+
+cor(cbind(dataset_vina$Age,dataset_vina$Rating,dataset_vina$Reviews)) # korelacijski koeficijenti parova regresora
+
+```
+Katgorijske varijable se predstavljaju dummy varijablama. Svaka kategorija predstavljena je svojom vlastitom indikatorskom varijablom koja poprima vrijednost 1 u slučaju da originalna kategorijska varijabla poprima vrijednost te kategorije, a 0 inače.
+```{r kategorijske ulazne varijable - dummy varijable}
+
+require(fastDummies)
+dataset_vina.d = dummy_cols(dataset_vina,select_columns=c('Primary_Grape', 'Natural', 'Country_Code', 'Style'))
+
+summary(dataset_vina.d)
+
+```
+U prvom modelu korištene su varijable: Age, Rating, Reviews, Natural, Style, Country_Code, Primary_Grape. Vidi se da model dosta loše procjenjuje po samoj prosječnoj grešci koja iznosi 105.3 eura. Vidi se i da su neke od kategorijskih varijabla visoko korelirane pa ćemo te varijable izbaciti iz modela. Također će biti izbaćene i one varijable koje nisu znaćajne za model tj. imaju visoku p vrijednost. Bitno je i da ovakav model za neke cijene predviđa negativne vrijednosti što nije prihvatljivo u ovom slućaju.
+```{r lin plot}
+model <- lm(Price ~ Age + Rating + Reviews + Natural + Style + Country_Code + Primary_Grape, data = dataset_vina)
+
+summary(model)
+plot(model)
+```
+
+```{r lin plot}
+
+model_original <- lm(Price ~ Age + Rating + Reviews + Country_Code_AUS + Country_Code_FRA + Country_Code_ESP + Country_Code_USA, data = dataset_vina.d)
+
+summary(model)
+
+plot(model_original)
+
+```
+Kada se koristi log od Cijene u modelu već se vidi znatno poboljšanje po R-squared i F testovima. No teško je bez računanja reći koliko je prosječna greška bolja jer je cijena u log.
+
+```{r lin plot}
+
+model <- lm(Log_Price ~ Age + Rating + Reviews + Natural + Style + Country_Code + Primary_Grape, data = dataset_vina)
+
+summary(model)
+plot(model)
+```
+
+
+```{r lin plot}
+
+model_log <- lm(Log_Price ~ Age + Rating + Reviews + Country_Code_AUS + Country_Code_FRA + Country_Code_ESP + Country_Code_USA, data = dataset_vina.d)
+summary(model_log)
+plot(model_log)
+
+
+model_log <- lm(Log_Price ~ Age + Rating + exp(Rating) + I(Age * Reviews * Rating) + log(Reviews) + Country_Code_AUS + Country_Code_FRA + Country_Code_ESP + Country_Code_USA, data = dataset_vina.d)
+summary(model_log)
+plot(model_log)
+
+model_log <- lm(Log_Price ~ Age + Rating + exp(Rating) + I(log(Age) * log(Reviews) * exp(Rating)) + log(Reviews) + Country_Code_AUS + Country_Code_FRA + Country_Code_ESP + Country_Code_USA, data = dataset_vina.d)
+summary(model_log)
+plot(model_log)
+
+
+```
+
+```{r}
+
+
+predictions_original <- predict(model_original, newdata = dataset_vina.d)
+
+predictions_log <- exp(predict(model_log, newdata = dataset_vina.d))
+
+actual <- dataset_vina.d$Price
+
+mae_original <- mean(abs(predictions_original - actual))
+mae_log <- mean(abs(predictions_log - actual))
+
+
+cat("MAE (Original Scale):", mae_original, "\n")
+cat("MAE (Log Scale):", mae_log, "\n")
+
+```
+Kako bi poboljšali model ponekad je dobro izbaciti stršeće vrijednosti, jer one znatno utjeću na model a često nisu reprezentativna za većinu uzoraka. Npr, vrlo skupa ili retka vina često predstavljaju specifične slučajeve koje je teško objasniti bez šireg konteksta.
+```{r}
+
+standardized_residuals <- rstandard(model_log)
+
+outliers <- which(abs(standardized_residuals) > 3)
+
+dataset_vina.d[outliers, ]
+
+dataset_vina.cleaned <- dataset_vina.d[-outliers, ]
+
+model_log <- lm(Log_Price ~ Age + Rating + exp(Rating) + I(log(Age) * log(Reviews) * exp(Rating)) + log(Reviews) + Country_Code_AUS + Country_Code_FRA + Country_Code_ESP + Country_Code_USA, data = dataset_vina.cleaned)
+summary(model_log)
+plot(model_log)
+
+```
+
+```{r}
+
+
+predictions_original <- predict(model_original, newdata = dataset_vina.d)
+
+predictions_log <- exp(predict(model_log, newdata = dataset_vina.cleaned))
+
+actual <- dataset_vina.d$Price
+actual_cleaned <- dataset_vina.cleaned$Price
+
+mae_original <- mean(abs(predictions_original - actual))
+mae_log <- mean(abs(predictions_log - actual_cleaned))
+
+
+
+cat("MAE (Original Scale):", mae_original, "\n")
+cat("MAE (Log Scale):", mae_log, "\n")
+
+```
+
+
+
+
+
+
+
