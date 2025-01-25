@@ -552,11 +552,6 @@ Iz provedenog testa vidimo kako je p-vrijednost 0.0004, iako je p-vrijednost veÄ
 
 
 
-UÄitavnje podataka iz tablice.
-```{r data}
-dataset_vina = read.csv('vivino dataset.csv',header = T, sep = ',')
-summary(dataset_vina)
-```
 Izbacivanje redaka koji su bez vrijednosti ili nevaljane vrijednosti.
 ```{r}
 dataset_vina <- dataset_vina[dataset_vina$Year != "N.V." & !is.na(dataset_vina$Price) & dataset_vina$Year != '', ]
