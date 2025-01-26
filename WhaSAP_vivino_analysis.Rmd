@@ -750,3 +750,254 @@ cat("MAE (Log Scale):", mae_log, "\n")
 
 
 
+
+
+Posljednje pitanje na koje nas zanima odgovor jest: 
+"Koja vinska regija nudi najbolji omjer ocjene i cijene vina? Koju vinariju bismo posjetili iz te regije?"
+
+Započinjemo sa pregledom relevantnih podataka, u nastavku možemo vidjeti broj regija koje svaka država sadrži.
+``` {r vinske regije grupirane prema državama}
+library(dplyr)
+
+region_counts <- dataset_vina %>%
+  group_by(Country) %>%
+  summarize(Region_Count = n_distinct(Region))
+
+print(region_counts)
+```
+Za početak, omjer ocijene i cijene izračunat ćemo tako da podatke grupiramo po regijama te za svaku regiju odredimo prosječnu ocijenu (Avg_Rating), prosječnu cijenu vina u toj regiji (Avg_Price) te na temelju njih izračunamo njihov omjer (Avg_Rating_Price_Ratio). Regije u nastavku sortirane su silazno na temelju njihovog omjera.
+
+Prvih 10 regija koje imaju najveći omjer ocjene i cijene:
+```{r vinske regije sortirane silazno po omjeru ocjene i cijene}
+result <- dataset_vina %>%
+  group_by(Region) %>%
+  summarize(
+    Total_Vines = n(),
+    Avg_Rating = mean(Rating, na.rm = TRUE),
+    Avg_Price = mean(Price, na.rm = TRUE),
+    Avg_Rating_Price_Ratio = Avg_Rating / Avg_Price
+  ) %>%
+   arrange(desc(Avg_Rating_Price_Ratio))
+
+head(result, 10)
+```
+Prikaz prosječnih ocijena i cijena vinarija u regiji sa najboljim omjerom ocijene i kvalitete:
+```{r grafički prikaz vinarija}
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+
+valle_del_cinca_data <- dataset_vina %>%
+  filter(Region == "Valle del Cinca")
+
+print(valle_del_cinca_data)
+
+summary_data <- valle_del_cinca_data %>%
+  group_by(Winery) %>%
+  summarize(
+    Avg_Rating = mean(Rating, na.rm = TRUE),
+    Avg_Price = mean(Price, na.rm = TRUE)
+  )
+
+
+long_data <- summary_data %>%
+  pivot_longer(
+    cols = c(Avg_Rating, Avg_Price),
+    names_to = "Metric",
+    values_to = "Value"
+  )
+
+
+ggplot(long_data, aes(x = Winery, y = Value, color = Metric, group = Metric)) +
+  geom_point(size = 3) + 
+  labs(
+    title = "Average Review and Price by Winery",
+    x = "Winery",
+    y = "Value",
+    color = "Metric"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+Možemo vidjeti da kad smo izračunali samo omjer ocijene i cijene, dobili samo da najbolji omjer ima regija koja sadrži samo dvije različite vrste vina, pri čemu imamo prikaz jedne drste vina kroz dvije godine. Ocijene su također relativno niske, ali cijena vina bliska je ocijenama, stoga je omjer ocjene i cijene najveći, no to ne mora značiti da je uistinu i najbolji. Budući da regija sadrži mali broj zapisa, nema velikih fluktuacija u ocjenama što također doprinosi visokoj vrijednosti omjera.
+
+
+
+Kako bi prosječne vrijednosti adekvatnije prikazivale stanje u regiji, promotrimo sada prvih 10 regija koje imaju najveći omjer ocijene i cijene, a da imaju više od 10 ocijena vina unutar regije:
+```{r vinske regije sortirane silazno po omjeru ocjene i cijene - imaju više od 10 ocjena}
+min_vines <- 10
+result <- dataset_vina %>%
+  group_by(Region) %>%
+  summarize(
+    Total_Vines = n(),
+    Avg_Rating = mean(Rating, na.rm = TRUE),
+    Avg_Price = mean(Price, na.rm = TRUE),
+    Avg_Rating_Price_Ratio = Avg_Rating / Avg_Price
+  ) %>%
+  filter(Total_Vines > min_vines) %>%
+   arrange(desc(Avg_Rating_Price_Ratio))
+
+head(result, 10)
+best <- head(result,1)
+```
+Vinarije u regiji koja ima najveći omjer ocijene i cijene, a sadrže više od 10 zapisa o vinima unutar regije:
+```{r grafički prikaz vinarija}
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+
+data_best <- dataset_vina %>%
+    filter(Region %in% best$Region)
+
+print(data_best)
+
+
+summary_data <- data_best %>%
+  group_by(Winery) %>%
+  summarize(
+    Avg_Rating = mean(Rating, na.rm = TRUE),
+    Avg_Price = mean(Price, na.rm = TRUE)
+  )
+
+global_avg_price <- mean(data_best$Price, na.rm = TRUE)
+global_avg_rating <- mean(data_best$Rating, na.rm = TRUE)
+
+
+long_data <- summary_data %>%
+  pivot_longer(
+    cols = c(Avg_Rating, Avg_Price),
+    names_to = "Metric",
+    values_to = "Value"
+  )
+
+
+ggplot(long_data, aes(x = Winery, y = Value, color = Metric, group = Metric)) +
+  geom_point(size = 3) + 
+  geom_hline(yintercept = global_avg_price, color = "red", linetype = "dashed", size = 1, show.legend = TRUE) + 
+  geom_hline(yintercept = global_avg_rating, color = "blue", linetype = "dashed", size = 1, show.legend = TRUE) +
+  labs(
+    title = "Average Review and Price by Winery",
+    x = "Winery",
+    y = "Value",
+    color = "Metric",
+    caption = paste("Dashed blue line: Average Rating | Dashed red line: Average Price | Region: ",best$Region)
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+Kada promotrimo regije koje imaju više od 10 zapisa o vinima, prvo mjesto zauzima Španjolska regija Cariñena. Kada bismo birali vinariju u ovoj regiji odabrali bismo vinariju El Ciroo jer ima prosječnu ocijenu blisku prosječnoj ocijeni regije, dok je prosječna cijena niža naspram drugih vinarija. 
+
+Ipak, možemo uvidjeti da mali brojnik (ocijene su iz intervala od 0-5) znatno utječe na omjer, jer su bolja vina često i skuplja, skuplja vina znatno smanjuju omjer ocijene i cijene jer ocijena i cijena ne rastu proporcionalno. Stoga ćemo proučiti promjenu omjera ovisno o rastu prosječne ocijene regije. U filtraciji zatražit ćemo da ocijena regije iterativno raste sa 3.5 na 4.5 kako bismo pronašli kvalitetnije vino po pristojnoj cijeni. 
+
+Radimo iteracije u kojima mijenjamo vrijednost filtera filter(Avg_Rating > x), pri čemu x poprima vrijednosti od 3.5 do 4.5 uz korak 0.1:
+```{r vinske regije sortirane silazno po omjeru ocjene i cijene - imaju prosječnu ocijenu regije 3.5-4.5}
+library(dplyr)
+
+x <- 3.5
+max_x <- 4.5
+increment <- 0.1
+best_list <- list() 
+iteration <- 1 
+
+while (x < max_x) {
+  cat("\nIteration with Avg_Rating >", x, "\n") 
+  
+  result <- dataset_vina %>%
+    group_by(Region) %>%
+    summarize(
+      Total_Vines = n(),
+      Avg_Rating = mean(Rating, na.rm = TRUE),
+      Avg_Price = mean(Price, na.rm = TRUE),
+      Avg_Rating_Price_Ratio = Avg_Rating / Avg_Price
+    ) %>%
+    filter(Total_Vines > 10) %>%
+    filter(Avg_Rating > x) %>%
+    arrange(desc(Avg_Rating_Price_Ratio))
+  
+  print(head(result, 10))
+  
+  best_list[[iteration]] <- head(result, 1)
+  
+  x <- x + increment
+  iteration <- iteration + 1
+}
+
+best_combined <- bind_rows(best_list)
+
+print(best_combined)
+
+```
+Grafički prikaz vinarija koje imaju prosječnu ocjenu regije između 3.5-4.5:
+```{r grafički prikaz regija koje imaju prosječnu ocijenu regije 3.5-4.5}
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+
+x_br <- 3.5
+max_x <- 4.5
+increment <- 0.1
+i <- 1
+
+while (x_br < max_x) {
+  best_combined_row <- best_combined[i, , drop = FALSE]
+
+  data_best <- dataset_vina %>%
+    filter(Region %in% best_combined_row$Region)
+
+  summary_data <- data_best %>%
+    group_by(Winery) %>%
+    summarize(
+      Avg_Rating = mean(Rating, na.rm = TRUE),
+      Avg_Price = mean(Price, na.rm = TRUE)
+    )
+
+  global_avg_price <- mean(data_best$Price, na.rm = TRUE)
+  global_avg_rating <- mean(data_best$Rating, na.rm = TRUE)
+
+
+  long_data <- summary_data %>%
+  pivot_longer(
+    cols = c(Avg_Rating, Avg_Price),
+    names_to = "Metric",
+    values_to = "Value"
+  )
+
+
+  plot <- ggplot(long_data, aes(x = Winery, y = Value, color = Metric, group = Metric)) +
+    geom_point(size = 3) + 
+    geom_hline(yintercept = global_avg_price, color = "red", linetype = "dashed", size = 1) + 
+    geom_hline(yintercept = global_avg_rating, color = "blue", linetype = "dashed", size = 1) +
+    labs(
+      title = paste("Average Review and Price by Winery with Avg_Rating >", x_br),
+      x = "Winery",
+      y = "Value",
+      color = "Metric",
+      caption = paste("Dashed blue line: Average Rating | Dashed red line: Average Price | Region: ",best_combined_row)
+    ) +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  
+   print(plot)
+
+  x_br <- x_br + increment
+  i <- i + 1
+}
+```
+U sljedećem prikazu podataka, uviđamo kako je najbolji omjer ocijene i cijene ponudila regija Primitivo di Manduria, sa prosječnom ocijenom 4.090909, te prosječnom cijenom	13.376364. Iako je sam omjer relativno mali (0.305831181), to je za očekivati budući da je nazivnik (prosječna ocijena) vrlo mali broj, a porast prosječne ocijene ne prati linearno porast cijene. 
+
+```{r vinarija sa najboljim omjerom cijene i kvalitete}
+Primitivo_di_Manduria_data <- dataset_vina %>%
+  filter(Region == "Primitivo di Manduria")
+
+print(Primitivo_di_Manduria_data)
+
+```
+Kada bismo morali birati vinariju iz ove regije odabrali bismo San Marzano jer njihovo vino "60 Sessantanni Old Vines Primitivo di Manduria 2017" ima 7442 osvrta te visoku ocjenu od 4.5. Stoga možemo zaključiti ukoliko vinarija ima toliki publicitet i visoke ocijene, da su im i proizvodi kvalitetni i vrijedni degustacije.
+
+Za osobe koje su spremne izdvojiti više, regije Duriense i Wehlen također mogu pružiti dobar omjer prosječne ocijene i cijene, dok svim regijama sa prosječnom ocijenom većom od 4.3, cijena izrazito naraste.
+
+
+
+
