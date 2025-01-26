@@ -53,7 +53,6 @@ Koje sve vrste vina (Style) imamo među danim podatcima?
 ```{r vrste vina}
 unique(dataset_vina$Style)     # jedinstveni nazivi vrste vina
 ```
-Kada podijelimo podatke na grupe prema vrsti vina, možemo vidjeti da se ukupni brojevi ocjena za svaku vrstu vina znatno razlikuju.
 
 
 
@@ -62,18 +61,21 @@ Neka od ključnih pitanja koja nas zanimaju su:
 
 - Postoji li razlika u ocjenama vina medu različitim vrstama vina?
 
-Provjerimo vizano postoje li razlike u ocjenama za različite vrste vina. 
+Provjerimo vizualno postoje li razlike u ocjenama za različite vrste vina. 
 ```{r test razlike u prihodima}
 
 # Graficki prikaz podataka
 boxplot(dataset_vina$Rating ~ dataset_vina$Style)
 
 ```
+Na boxplot-u možemo vidjeti da određene srednje vrijednosti (poput one za npr. Rose) znatno odskaču od ostalih, ali postoje i srednje vrijednosti koje djeluju blisko (npr. za Dessert, Fortified i Sparkling).
+
+
 
 # ANOVA
 
 ANOVA (engl. *ANalysis Of VAriance*) je metoda kojom testiramo sredine više populacija. 
-U analizi varijance pretpostavlja se:da je ukupna varijabilnost u podatcima posljedica varijabilnosti podataka unutar svakog pojedine grupe (populacije) i varijabilnosti između različitih grupa. Varijabilnost unutar pojedinog uzorka je rezultat slučajnosti, a ako postoje razlike u sredinama populacija, one će biti odražene u varijabilnosti među grupama. Jedan od glavnih ciljeva analize varijance je ustanoviti jesu li upravo te razlike između grupa samo posljedica slučajnosti ili je statistički značajna.
+U analizi varijance pretpostavlja se:da je ukupna varijabilnost u podatcima posljedica varijabilnosti podataka unutar svake pojedine grupe (populacije) i varijabilnosti između različitih grupa. Varijabilnost unutar pojedinog uzorka je rezultat slučajnosti, a ako postoje razlike u sredinama populacija, one će biti odražene u varijabilnosti među grupama. Jedan od glavnih ciljeva analize varijance je ustanoviti jesu li upravo te razlike između grupa samo posljedica slučajnosti ili su statistički značajne.
 
 ## Jednofaktorska ANOVA
 
@@ -112,16 +114,22 @@ lillie.test(dataset_vina$Rating[dataset_vina$Style=='Rose'])
 lillie.test(dataset_vina$Rating[dataset_vina$Style=='Sparkling'])
 lillie.test(dataset_vina$Rating[dataset_vina$Style=='White'])
 
-# Prikaz podataka podijeljenih u grupe pomoću histograma
-hist(dataset_vina$Rating[dataset_vina$Style == 'Dessert'], main = "Dessert Ratings", xlab = "Rating")
-hist(dataset_vina$Rating[dataset_vina$Style == 'Fortified'], main = "Fortified Ratings", xlab = "Rating")
-hist(dataset_vina$Rating[dataset_vina$Style == 'Red'], main = "Red Ratings", xlab = "Rating")
-hist(dataset_vina$Rating[dataset_vina$Style == 'Rose'], main = "Rose Ratings", xlab = "Rating")
-hist(dataset_vina$Rating[dataset_vina$Style == 'Sparkling'], main = "Sparkling Ratings", xlab = "Rating")
-hist(dataset_vina$Rating[dataset_vina$Style == 'White'], main = "White Ratings", xlab = "Rating")
-```
-Vidimo da su p-vrijednosti provedenog testa vrlo male (<5%) pa odbacujemo nultu hipotezu na razini značajnosti 5%.
+plot_histogram_with_normal_dist <- function(data, style_name) {
+  hist(data, main = paste(style_name, "Ratings"), xlab = "Rating", prob = TRUE, col = "lightblue", border = "white")
+  curve(dnorm(x, mean = mean(data), sd = sd(data)), add = TRUE, col = "red", lwd = 2)
+}
 
+# Prikaz podataka podijeljenih u grupe pomoću histograma
+plot_histogram_with_normal_dist(dataset_vina$Rating[dataset_vina$Style == 'Dessert'], 'Dessert')
+plot_histogram_with_normal_dist(dataset_vina$Rating[dataset_vina$Style == 'Fortified'], 'Fortified')
+plot_histogram_with_normal_dist(dataset_vina$Rating[dataset_vina$Style == 'Red'], 'Red')
+plot_histogram_with_normal_dist(dataset_vina$Rating[dataset_vina$Style == 'Rose'], 'Rose')
+plot_histogram_with_normal_dist(dataset_vina$Rating[dataset_vina$Style == 'Sparkling'], 'Sparkling')
+plot_histogram_with_normal_dist(dataset_vina$Rating[dataset_vina$Style == 'White'], 'White')
+```
+Vidimo da su p-vrijednosti provedenog testa vrlo male (<5%). Razlog zbog kojeg p-vrijednosti mogu biti ovako male je i osjetljivost testa na outliere koje smo vidjeli u početnom boxplot-u. Također, jedan od razloga zbog kojeg testovi odbacuju nul-hipotezu mogao bi biti i zato što imamo diskretizirane (4.0, 4.1, ...) umjesto kontinuiranih podataka
+
+Provodimo KS test za provjeru normalnosti:
 ```{r test pretpostavka - normalnost - Kolmogorov-Smirnovljev test}
 ks.test(dataset_vina$Rating[dataset_vina$Style == 'Dessert'], "pnorm", 
         mean = mean(dataset_vina$Rating[dataset_vina$Style == 'Dessert'], na.rm = TRUE), #na.rm = True odbacuje vrijednosti koje nedostaju
@@ -147,6 +155,8 @@ ks.test(dataset_vina$Rating[dataset_vina$Style == 'White'], "pnorm",
         mean = mean(dataset_vina$Rating[dataset_vina$Style == 'White'], na.rm = TRUE), 
         sd = sd(dataset_vina$Rating[dataset_vina$Style == 'White'], na.rm = TRUE))
 ```
+Provedbom KS-testa dobivamo veće vjerojatnosti, te na raziniznačajnoti od 1% ne bismo mogli odbaciti hipoteze da Dessert, Fortified, Rose i Sparkling ne prate normalu razdiobu. Ali slično kao i u provedbi Lillieforsove inačice KS testa, na preciznost testa utječu outlieri i diskretizirane vrijednosti.
+
 
 Prikaz podataka podijeljenih u grupe na Q-Q plot-u:
 ```{r}
@@ -168,6 +178,9 @@ qqline(dataset_vina$Rating[dataset_vina$Style == "Sparkling"], col = "red")
 qqnorm(dataset_vina$Rating[dataset_vina$Style == "White"], main = "Q-Q Plot: White Ratings")
 qqline(dataset_vina$Rating[dataset_vina$Style == "White"], col = "red")
 ```
+Prikazom podataka na Q-Q Plot-u možemo vidjeti da vrijednosti vrlo blisko prate normalu razdiobu i na temelju njega zaključujemo da grafovi izgledaju u redu za primjenu ANOVE, tako da možemo koristiti parametarsku inačicu.
+
+
 Kad su veličine grupa podjednake, ANOVA je relativno robusna metoda na blaga odstupanja od pretpostavke normalnosti i homogenosti varijanci. 
 ```{r ukupan broj ocjena za svaku vrstu vina}
 table(dataset_vina$Style)      # broj ocjena za svaku pojedinu vrstu vina
@@ -255,8 +268,7 @@ Vrlo mala p-vrijednost (<0.001) kod provođenja ANOVA testa implicira da postoji
 Zaključak: Svi ANOVA testovi pokazali su da postoji statistički značajna razlika među različitim podgrupama vrsta vina, odnosno možemo odgovoriti na početno pitanje i zaključiti da postoji razlika u ocjenama među različitim vrstama vina.
 
 
-
-Grafički prikaz sugerira da postoji jasna razlika između grupa, što potvrđuje i ANOVA. Kako bismo procijenili model koji pomoću varijable o vrsti vina objašnjava ocjene?
+Grafički prikaz (boxplot) sa početka ovog dokumenta sugerira da postoji jasna razlika između grupa, što potvrđuje i ANOVA. Sada kada smo proučili zasebno svaku od podgrupa, kako bismo procijenili model koji pomoću varijable o vrsti vina objašnjava ocjene?
 ```{r linearni model}
 
 # Linearni model
@@ -273,7 +285,7 @@ summary(anova_result)
 ```
 P-vrijednost (< 2.2e-16) pokazuje da varijabla vrste vina (Style) ima statisički značajan utjecaj na ocjene (Rating).
 
-Kruskal-Wallisov test je neparametarska alternativa (jednofaktorskoj)analizi varijance - "neparametarska ANOVA"
+Kruskal-Wallisov test je neparametarska alternativa (jednofaktorskoj) analizi varijance - "neparametarska ANOVA". Budući da je on robusniji na odstupanja pretpostavki ANOVA-e, možemo provesti i njega kako bismo potvrdili svoj zaključak o razlici ocjene ovisno o vrsti vina.
 Njegove hipoteze su:
 H0 : medijani distribucija svih uzoraka su jednaki 
 H1 : barem dva medijana nisu jednaka
