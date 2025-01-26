@@ -332,7 +332,7 @@ ggplot(contingency_df, aes(x = Var1, y = Freq, fill = Var2)) +
 ```
 
 rezultat: X-squared = 43.174, df = 5, p-value = 3.407e-08
-pošto je p<0.5 možemo odbaciti hipotezu 
+pošto je p<0.05 možemo odbaciti hipotezu 
 da su vrste vina povezane s da li su prirodne
 i prihvaćamo hipotezu da je to nepovezano kao točnu
 
