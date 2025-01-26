@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2025.1.26)  26 JAN 2025 19:28
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2025.1.26)  26 JAN 2025 19:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -520,44 +520,44 @@ Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/test razlike
  u prihodima-1.pdf  used on input line 240.
 (pdftex.def)             Requested size: 437.6406pt x 256.96327pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 240--245
+Underfull \hbox (badness 10000) in paragraph at lines 240--244
 [][] \T1/lmr/m/n/10 (+20) Na
  []
 
 [2 <./WhaSAP_vivino_analysis_files/figure-latex/test razlike u prihodima-1.pdf>
 ]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 263.
+(Font)              <10> on input line 262.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 263.
+(Font)              <7> on input line 262.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 263.
+(Font)              <5> on input line 262.
 
 LaTeX Warning: Command \textperiodcentered invalid in math mode on input line 2
-63.
-
-
-LaTeX Warning: Command \textperiodcentered invalid in math mode on input line 2
-63.
+62.
 
 
 LaTeX Warning: Command \textperiodcentered invalid in math mode on input line 2
-63.
+62.
 
 
 LaTeX Warning: Command \textperiodcentered invalid in math mode on input line 2
-63.
+62.
 
 
 LaTeX Warning: Command \textperiodcentered invalid in math mode on input line 2
-63.
+62.
 
 
 LaTeX Warning: Command \textperiodcentered invalid in math mode on input line 2
-63.
+62.
+
+
+LaTeX Warning: Command \textperiodcentered invalid in math mode on input line 2
+62.
 
 LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
-319.
+318.
 (/usr/share/texmf/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) [3]
@@ -569,7 +569,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/test pretpostavka - normalnost
  Lillieforsova inačica KS testa-1.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/test pretpos
 tavka - normalnost - Lillieforsova inačica KS testa-1.pdf  used on input line 
-414.
+413.
 (pdftex.def)             Requested size: 422.57771pt x 285.0643pt.
 [4]
 <WhaSAP_vivino_analysis_files/figure-latex/test pretpostavka - normalnost - Lil
@@ -580,7 +580,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/test pretpostavka - normalnost
  Lillieforsova inačica KS testa-2.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/test pretpos
 tavka - normalnost - Lillieforsova inačica KS testa-2.pdf  used on input line 
-422.
+421.
 (pdftex.def)             Requested size: 429.60394pt x 285.0643pt.
 <WhaSAP_vivino_analysis_files/figure-latex/test pretpostavka - normalnost - Lil
 lieforsova inačica KS testa-3.pdf, id=47, 422.57875pt x 285.065pt>
@@ -590,7 +590,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/test pretpostavka - normalnost
  Lillieforsova inačica KS testa-3.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/test pretpos
 tavka - normalnost - Lillieforsova inačica KS testa-3.pdf  used on input line 
-430.
+429.
 (pdftex.def)             Requested size: 422.57771pt x 285.0643pt.
 [5 <./WhaSAP_vivino_analysis_files/figure-latex/test pretpostavka - normalnost 
 - Lillieforsova inačica KS testa-1.pdf> <./WhaSAP_vivino_analysis_files/figure
@@ -603,7 +603,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/test pretpostavka - normalnost
  Lillieforsova inačica KS testa-4.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/test pretpos
 tavka - normalnost - Lillieforsova inačica KS testa-4.pdf  used on input line 
-438.
+437.
 (pdftex.def)             Requested size: 422.57771pt x 285.0643pt.
 <WhaSAP_vivino_analysis_files/figure-latex/test pretpostavka - normalnost - Lil
 lieforsova inačica KS testa-5.pdf, id=69, 422.57875pt x 285.065pt>
@@ -613,7 +613,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/test pretpostavka - normalnost
  Lillieforsova inačica KS testa-5.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/test pretpos
 tavka - normalnost - Lillieforsova inačica KS testa-5.pdf  used on input line 
-446.
+445.
 (pdftex.def)             Requested size: 422.57771pt x 285.0643pt.
 [6 <./WhaSAP_vivino_analysis_files/figure-latex/test pretpostavka - normalnost 
 - Lillieforsova inačica KS testa-3.pdf> <./WhaSAP_vivino_analysis_files/figure
@@ -626,7 +626,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/test pretpostavka - normalnost
  Lillieforsova inačica KS testa-6.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/test pretpos
 tavka - normalnost - Lillieforsova inačica KS testa-6.pdf  used on input line 
-454.
+453.
 (pdftex.def)             Requested size: 422.57771pt x 285.0643pt.
 [7 <./WhaSAP_vivino_analysis_files/figure-latex/test pretpostavka - normalnost 
 - Lillieforsova inačica KS testa-5.pdf> <./WhaSAP_vivino_analysis_files/figure
@@ -638,7 +638,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-5-1.pdf Graphic f
 ile (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-5-1.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-5-1.pdf  used on input line 616.
+k-5-1.pdf  used on input line 615.
 (pdftex.def)             Requested size: 436.63019pt x 283.0568pt.
 [9]
 <WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-5-2.pdf, id=121, 436.6
@@ -647,7 +647,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-5-2.pdf Graphic f
 ile (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-5-2.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-5-2.pdf  used on input line 625.
+k-5-2.pdf  used on input line 624.
 (pdftex.def)             Requested size: 436.63019pt x 283.0568pt.
 <WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-5-3.pdf, id=122, 436.6
 3126pt x 283.0575pt>
@@ -655,7 +655,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-5-3.pdf Graphic f
 ile (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-5-3.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-5-3.pdf  used on input line 634.
+k-5-3.pdf  used on input line 633.
 (pdftex.def)             Requested size: 436.63019pt x 283.0568pt.
 [10 <./WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-5-1.pdf> <./WhaS
 AP_vivino_analysis_files/figure-latex/unnamed-chunk-5-2.pdf>]
@@ -665,7 +665,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-5-4.pdf Graphic f
 ile (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-5-4.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-5-4.pdf  used on input line 643.
+k-5-4.pdf  used on input line 642.
 (pdftex.def)             Requested size: 436.63019pt x 283.0568pt.
 <WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-5-5.pdf, id=144, 436.6
 3126pt x 283.0575pt>
@@ -673,7 +673,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-5-5.pdf Graphic f
 ile (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-5-5.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-5-5.pdf  used on input line 652.
+k-5-5.pdf  used on input line 651.
 (pdftex.def)             Requested size: 436.63019pt x 283.0568pt.
 [11 <./WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-5-3.pdf> <./WhaS
 AP_vivino_analysis_files/figure-latex/unnamed-chunk-5-4.pdf>]
@@ -683,7 +683,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-5-6.pdf Graphic f
 ile (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-5-6.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-5-6.pdf  used on input line 661.
+k-5-6.pdf  used on input line 660.
 (pdftex.def)             Requested size: 436.63019pt x 283.0568pt.
 [12 <./WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-5-5.pdf> <./WhaS
 AP_vivino_analysis_files/figure-latex/unnamed-chunk-5-6.pdf>] [13] [14] [15] [1
@@ -694,7 +694,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-8-1.pdf Graphic f
 ile (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-8-1.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-8-1.pdf  used on input line 1095.
+k-8-1.pdf  used on input line 1094.
 (pdftex.def)             Requested size: 453.6939pt x 315.17673pt.
 [17]
 <WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-10-1.pdf, id=209, 441.
@@ -703,7 +703,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-10-1.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-10-1.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-10-1.pdf  used on input line 1142.
+k-10-1.pdf  used on input line 1141.
 (pdftex.def)             Requested size: 441.64891pt x 285.0643pt.
 [18 <./WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-8-1.pdf>]
 <WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-10-2.pdf, id=221, 422.
@@ -712,7 +712,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-10-2.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-10-2.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-10-2.pdf  used on input line 1154.
+k-10-2.pdf  used on input line 1153.
 (pdftex.def)             Requested size: 422.57771pt x 285.0643pt.
 [19 <./WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-10-1.pdf> <./Wha
 SAP_vivino_analysis_files/figure-latex/unnamed-chunk-10-2.pdf>]
@@ -722,7 +722,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-11-1.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-11-1.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-11-1.pdf  used on input line 1175.
+k-11-1.pdf  used on input line 1174.
 (pdftex.def)             Requested size: 427.59645pt x 285.0643pt.
 <WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-11-2.pdf, id=244, 422.
 57875pt x 285.065pt>
@@ -730,7 +730,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-11-2.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-11-2.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-11-2.pdf  used on input line 1187.
+k-11-2.pdf  used on input line 1186.
 (pdftex.def)             Requested size: 422.57771pt x 285.0643pt.
 [20 <./WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-11-1.pdf>]
 <WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-12-1.pdf, id=257, 436.
@@ -739,7 +739,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-12-1.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-12-1.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-12-1.pdf  used on input line 1242.
+k-12-1.pdf  used on input line 1241.
 (pdftex.def)             Requested size: 436.63019pt x 283.0568pt.
 [21 <./WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-11-2.pdf>]
 <WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-12-2.pdf, id=270, 436.
@@ -748,7 +748,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-12-2.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-12-2.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-12-2.pdf  used on input line 1251.
+k-12-2.pdf  used on input line 1250.
 (pdftex.def)             Requested size: 436.63019pt x 283.0568pt.
 [22 <./WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-12-1.pdf> <./Wha
 SAP_vivino_analysis_files/figure-latex/unnamed-chunk-12-2.pdf>]
@@ -758,7 +758,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-13-1.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-13-1.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-13-1.pdf  used on input line 1272.
+k-13-1.pdf  used on input line 1271.
 (pdftex.def)             Requested size: 441.64891pt x 285.0643pt.
 <WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-13-2.pdf, id=292, 422.
 57875pt x 285.065pt>
@@ -766,7 +766,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-13-2.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-13-2.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-13-2.pdf  used on input line 1284.
+k-13-2.pdf  used on input line 1283.
 (pdftex.def)             Requested size: 422.57771pt x 285.0643pt.
 [23 <./WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-13-1.pdf>]
 <WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-14-1.pdf, id=305, 422.
@@ -775,7 +775,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-14-1.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-14-1.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-14-1.pdf  used on input line 1319.
+k-14-1.pdf  used on input line 1318.
 (pdftex.def)             Requested size: 422.57771pt x 285.0643pt.
 [24 <./WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-13-2.pdf>]
 <WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-14-2.pdf, id=319, 431.
@@ -784,7 +784,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-14-2.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-14-2.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-14-2.pdf  used on input line 1331.
+k-14-2.pdf  used on input line 1330.
 (pdftex.def)             Requested size: 431.61143pt x 285.0643pt.
 [25 <./WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-14-1.pdf> <./Wha
 SAP_vivino_analysis_files/figure-latex/unnamed-chunk-14-2.pdf>]
@@ -794,7 +794,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-15-1.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-15-1.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-15-1.pdf  used on input line 1355.
+k-15-1.pdf  used on input line 1354.
 (pdftex.def)             Requested size: 465.73886pt x 285.0643pt.
 <WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-15-2.pdf, id=342, 459.
 7175pt x 285.065pt>
@@ -802,7 +802,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-15-2.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-15-2.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-15-2.pdf  used on input line 1367.
+k-15-2.pdf  used on input line 1366.
 (pdftex.def)             Requested size: 459.71637pt x 285.0643pt.
 [26 <./WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-15-1.pdf>]
 <WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-15-3.pdf, id=355, 465.
@@ -811,7 +811,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-15-3.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-15-3.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-15-3.pdf  used on input line 1380.
+k-15-3.pdf  used on input line 1379.
 (pdftex.def)             Requested size: 465.73886pt x 285.0643pt.
 [27 <./WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-15-2.pdf>]
 <WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-15-4.pdf, id=368, 450.
@@ -820,7 +820,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-15-4.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-15-4.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-15-4.pdf  used on input line 1392.
+k-15-4.pdf  used on input line 1391.
 (pdftex.def)             Requested size: 450.68263pt x 285.0643pt.
 [28 <./WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-15-3.pdf> <./Wha
 SAP_vivino_analysis_files/figure-latex/unnamed-chunk-15-4.pdf>] [29] [30]
@@ -830,7 +830,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-22-1.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-22-1.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-22-1.pdf  used on input line 1600.
+k-22-1.pdf  used on input line 1599.
 (pdftex.def)             Requested size: 437.6406pt x 250.94069pt.
 <WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-22-2.pdf, id=398, 437.
 635pt x 250.9375pt>
@@ -838,7 +838,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-22-2.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-22-2.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-22-2.pdf  used on input line 1611.
+k-22-2.pdf  used on input line 1610.
 (pdftex.def)             Requested size: 437.6406pt x 250.94069pt.
 [31 <./WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-22-1.pdf> <./Wha
 SAP_vivino_analysis_files/figure-latex/unnamed-chunk-22-2.pdf>]
@@ -848,7 +848,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-22-3.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-22-3.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-22-3.pdf  used on input line 1622.
+k-22-3.pdf  used on input line 1621.
 (pdftex.def)             Requested size: 437.6406pt x 250.94069pt.
 <WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-22-4.pdf, id=419, 436.
 63126pt x 250.9375pt>
@@ -856,7 +856,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-22-4.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-22-4.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-22-4.pdf  used on input line 1630.
+k-22-4.pdf  used on input line 1629.
 (pdftex.def)             Requested size: 436.63019pt x 250.93687pt.
 <WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-22-5.pdf, id=420, 436.
 63126pt x 248.93pt>
@@ -864,7 +864,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-22-5.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-22-5.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-22-5.pdf  used on input line 1638.
+k-22-5.pdf  used on input line 1637.
 (pdftex.def)             Requested size: 436.63019pt x 248.92938pt.
 [32 <./WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-22-3.pdf> <./Wha
 SAP_vivino_analysis_files/figure-latex/unnamed-chunk-22-4.pdf>]
@@ -874,7 +874,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-22-6.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-22-6.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-22-6.pdf  used on input line 1646.
+k-22-6.pdf  used on input line 1645.
 (pdftex.def)             Requested size: 436.63019pt x 250.93687pt.
 <WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-22-7.pdf, id=440, 436.
 63126pt x 250.9375pt>
@@ -882,7 +882,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-22-7.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-22-7.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-22-7.pdf  used on input line 1654.
+k-22-7.pdf  used on input line 1653.
 (pdftex.def)             Requested size: 436.63019pt x 250.93687pt.
 [33 <./WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-22-5.pdf> <./Wha
 SAP_vivino_analysis_files/figure-latex/unnamed-chunk-22-6.pdf>]
@@ -892,7 +892,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-23-1.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-23-1.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-23-1.pdf  used on input line 1668.
+k-23-1.pdf  used on input line 1667.
 (pdftex.def)             Requested size: 434.6293pt x 286.07242pt.
 [34 <./WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-22-7.pdf> <./Wha
 SAP_vivino_analysis_files/figure-latex/unnamed-chunk-23-1.pdf>]
@@ -902,7 +902,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-23-2.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-23-2.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-23-2.pdf  used on input line 1678.
+k-23-2.pdf  used on input line 1677.
 (pdftex.def)             Requested size: 422.58415pt x 286.07242pt.
 <WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-24-1.pdf, id=481, 437.
 635pt x 250.9375pt>
@@ -910,7 +910,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-24-1.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-24-1.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-24-1.pdf  used on input line 1694.
+k-24-1.pdf  used on input line 1693.
 (pdftex.def)             Requested size: 437.6406pt x 250.94069pt.
 [35 <./WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-23-2.pdf>]
 <WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-24-2.pdf, id=494, 437.
@@ -919,7 +919,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-24-2.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-24-2.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-24-2.pdf  used on input line 1706.
+k-24-2.pdf  used on input line 1705.
 (pdftex.def)             Requested size: 437.6406pt x 250.94069pt.
 <WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-24-3.pdf, id=495, 437.
 635pt x 250.9375pt>
@@ -927,7 +927,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-24-3.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-24-3.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-24-3.pdf  used on input line 1717.
+k-24-3.pdf  used on input line 1716.
 (pdftex.def)             Requested size: 437.6406pt x 250.94069pt.
 [36 <./WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-24-1.pdf> <./Wha
 SAP_vivino_analysis_files/figure-latex/unnamed-chunk-24-2.pdf>]
@@ -937,7 +937,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-24-4.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-24-4.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-24-4.pdf  used on input line 1728.
+k-24-4.pdf  used on input line 1727.
 (pdftex.def)             Requested size: 437.6406pt x 250.94069pt.
 <WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-24-5.pdf, id=515, 437.
 635pt x 250.9375pt>
@@ -945,7 +945,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-24-5.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-24-5.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-24-5.pdf  used on input line 1740.
+k-24-5.pdf  used on input line 1739.
 (pdftex.def)             Requested size: 437.6406pt x 250.94069pt.
 [37 <./WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-24-3.pdf> <./Wha
 SAP_vivino_analysis_files/figure-latex/unnamed-chunk-24-4.pdf>]
@@ -955,7 +955,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-25-1.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-25-1.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-25-1.pdf  used on input line 1756.
+k-25-1.pdf  used on input line 1755.
 (pdftex.def)             Requested size: 437.6406pt x 250.94069pt.
 <WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-25-2.pdf, id=536, 437.
 635pt x 250.9375pt>
@@ -963,7 +963,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-25-2.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-25-2.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-25-2.pdf  used on input line 1764.
+k-25-2.pdf  used on input line 1763.
 (pdftex.def)             Requested size: 437.6406pt x 250.94069pt.
 [38 <./WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-24-5.pdf> <./Wha
 SAP_vivino_analysis_files/figure-latex/unnamed-chunk-25-1.pdf>]
@@ -973,7 +973,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-25-3.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-25-3.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-25-3.pdf  used on input line 1772.
+k-25-3.pdf  used on input line 1771.
 (pdftex.def)             Requested size: 437.6406pt x 250.94069pt.
 [39 <./WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-25-2.pdf> <./Wha
 SAP_vivino_analysis_files/figure-latex/unnamed-chunk-25-3.pdf>] [40] [41] [42]
@@ -983,7 +983,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-30-1.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-30-1.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-30-1.pdf  used on input line 2061.
+k-30-1.pdf  used on input line 2060.
 (pdftex.def)             Requested size: 455.70831pt x 281.05359pt.
 <WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-30-2.pdf, id=587, 455.
 7025pt x 281.05pt>
@@ -991,7 +991,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-30-2.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-30-2.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-30-2.pdf  used on input line 2062.
+k-30-2.pdf  used on input line 2061.
 (pdftex.def)             Requested size: 455.70831pt x 281.05359pt.
 <WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-30-3.pdf, id=588, 459.
 7175pt x 281.05pt>
@@ -999,7 +999,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-30-3.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-30-3.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-30-3.pdf  used on input line 2063.
+k-30-3.pdf  used on input line 2062.
 (pdftex.def)             Requested size: 459.74442pt x 281.06645pt.
 <WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-30-4.pdf, id=589, 455.
 7025pt x 281.05pt>
@@ -1007,20 +1007,20 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-30-4.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-30-4.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-30-4.pdf  used on input line 2064.
+k-30-4.pdf  used on input line 2063.
 (pdftex.def)             Requested size: 455.70831pt x 281.05359pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 2061--2065
+Underfull \hbox (badness 10000) in paragraph at lines 2060--2064
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2061--2065
+Underfull \hbox (badness 10000) in paragraph at lines 2060--2064
 []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2061--2065
+Underfull \hbox (badness 10000) in paragraph at lines 2060--2064
 []
  []
 
@@ -1032,7 +1032,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-30-5.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-30-5.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-30-5.pdf  used on input line 2072.
+k-30-5.pdf  used on input line 2071.
 (pdftex.def)             Requested size: 422.58415pt x 286.07242pt.
 [45 <./WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-30-3.pdf> <./Wha
 SAP_vivino_analysis_files/figure-latex/unnamed-chunk-30-4.pdf>]
@@ -1042,11 +1042,11 @@ File: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-30-6.pdf Graphic
 file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-30-6.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/unnamed-chun
-k-30-6.pdf  used on input line 2080.
+k-30-6.pdf  used on input line 2079.
 (pdftex.def)             Requested size: 422.57771pt x 285.0643pt.
 [46 <./WhaSAP_vivino_analysis_files/figure-latex/unnamed-chunk-30-5.pdf> <./Wha
 SAP_vivino_analysis_files/figure-latex/unnamed-chunk-30-6.pdf>]
-Overfull \hbox (7.99359pt too wide) in paragraph at lines 2180--2180
+Overfull \hbox (7.99359pt too wide) in paragraph at lines 2179--2179
 []\T1/lmtt/m/n/10 ##     Country_Code_FRA + Country_Code_ESP + Country_Code_USA
 , data = dataset_vina.cleaned)[] 
  []
@@ -1059,7 +1059,7 @@ File: WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz vinarija-1.pdf
 <use WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz vinarija-1.pdf>
 
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/grafički pr
-ikaz vinarija-1.pdf  used on input line 2374.
+ikaz vinarija-1.pdf  used on input line 2373.
 (pdftex.def)             Requested size: 453.6939pt x 315.17673pt.
 [50] [51 <./WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz vinarija
 -1.pdf>] [52]
@@ -1083,114 +1083,114 @@ Overfull \vbox (1.84673pt too high) detected at line 2849
 
 [58]
 <WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje imaju p
-rosječnu ocijenu regije 3.5-4.5-1.pdf, id=720, 458.71375pt x 315.1775pt>
+rosječnu ocjenu regije 3.5-4.5-1.pdf, id=720, 458.71375pt x 315.1775pt>
 File: WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje im
-aju prosječnu ocijenu regije 3.5-4.5-1.pdf Graphic file (type pdf)
+aju prosječnu ocjenu regije 3.5-4.5-1.pdf Graphic file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje ima
-ju prosječnu ocijenu regije 3.5-4.5-1.pdf>
+ju prosječnu ocjenu regije 3.5-4.5-1.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/grafički pr
-ikaz regija koje imaju prosječnu ocijenu regije 3.5-4.5-1.pdf  used on input l
-ine 2851.
+ikaz regija koje imaju prosječnu ocjenu regije 3.5-4.5-1.pdf  used on input li
+ne 2851.
 (pdftex.def)             Requested size: 458.73363pt x 315.19115pt.
 <WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje imaju p
-rosječnu ocijenu regije 3.5-4.5-2.pdf, id=721, 453.695pt x 315.1775pt>
+rosječnu ocjenu regije 3.5-4.5-2.pdf, id=721, 453.695pt x 315.1775pt>
 File: WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje im
-aju prosječnu ocijenu regije 3.5-4.5-2.pdf Graphic file (type pdf)
+aju prosječnu ocjenu regije 3.5-4.5-2.pdf Graphic file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje ima
-ju prosječnu ocijenu regije 3.5-4.5-2.pdf>
+ju prosječnu ocjenu regije 3.5-4.5-2.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/grafički pr
-ikaz regija koje imaju prosječnu ocijenu regije 3.5-4.5-2.pdf  used on input l
-ine 2852.
+ikaz regija koje imaju prosječnu ocjenu regije 3.5-4.5-2.pdf  used on input li
+ne 2852.
 (pdftex.def)             Requested size: 453.6939pt x 315.17673pt.
 <WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje imaju p
-rosječnu ocijenu regije 3.5-4.5-3.pdf, id=722, 453.695pt x 315.1775pt>
+rosječnu ocjenu regije 3.5-4.5-3.pdf, id=722, 453.695pt x 315.1775pt>
 File: WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje im
-aju prosječnu ocijenu regije 3.5-4.5-3.pdf Graphic file (type pdf)
+aju prosječnu ocjenu regije 3.5-4.5-3.pdf Graphic file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje ima
-ju prosječnu ocijenu regije 3.5-4.5-3.pdf>
+ju prosječnu ocjenu regije 3.5-4.5-3.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/grafički pr
-ikaz regija koje imaju prosječnu ocijenu regije 3.5-4.5-3.pdf  used on input l
-ine 2853.
+ikaz regija koje imaju prosječnu ocjenu regije 3.5-4.5-3.pdf  used on input li
+ne 2853.
 (pdftex.def)             Requested size: 453.6939pt x 315.17673pt.
 <WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje imaju p
-rosječnu ocijenu regije 3.5-4.5-4.pdf, id=723, 458.71375pt x 315.1775pt>
+rosječnu ocjenu regije 3.5-4.5-4.pdf, id=723, 458.71375pt x 315.1775pt>
 File: WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje im
-aju prosječnu ocijenu regije 3.5-4.5-4.pdf Graphic file (type pdf)
+aju prosječnu ocjenu regije 3.5-4.5-4.pdf Graphic file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje ima
-ju prosječnu ocijenu regije 3.5-4.5-4.pdf>
+ju prosječnu ocjenu regije 3.5-4.5-4.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/grafički pr
-ikaz regija koje imaju prosječnu ocijenu regije 3.5-4.5-4.pdf  used on input l
-ine 2854.
+ikaz regija koje imaju prosječnu ocjenu regije 3.5-4.5-4.pdf  used on input li
+ne 2854.
 (pdftex.def)             Requested size: 458.73363pt x 315.19115pt.
 <WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje imaju p
-rosječnu ocijenu regije 3.5-4.5-5.pdf, id=724, 453.695pt x 315.1775pt>
+rosječnu ocjenu regije 3.5-4.5-5.pdf, id=724, 453.695pt x 315.1775pt>
 File: WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje im
-aju prosječnu ocijenu regije 3.5-4.5-5.pdf Graphic file (type pdf)
+aju prosječnu ocjenu regije 3.5-4.5-5.pdf Graphic file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje ima
-ju prosječnu ocijenu regije 3.5-4.5-5.pdf>
+ju prosječnu ocjenu regije 3.5-4.5-5.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/grafički pr
-ikaz regija koje imaju prosječnu ocijenu regije 3.5-4.5-5.pdf  used on input l
-ine 2855.
+ikaz regija koje imaju prosječnu ocjenu regije 3.5-4.5-5.pdf  used on input li
+ne 2855.
 (pdftex.def)             Requested size: 453.6939pt x 315.17673pt.
 <WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje imaju p
-rosječnu ocijenu regije 3.5-4.5-6.pdf, id=725, 453.695pt x 315.1775pt>
+rosječnu ocjenu regije 3.5-4.5-6.pdf, id=725, 453.695pt x 315.1775pt>
 File: WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje im
-aju prosječnu ocijenu regije 3.5-4.5-6.pdf Graphic file (type pdf)
+aju prosječnu ocjenu regije 3.5-4.5-6.pdf Graphic file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje ima
-ju prosječnu ocijenu regije 3.5-4.5-6.pdf>
+ju prosječnu ocjenu regije 3.5-4.5-6.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/grafički pr
-ikaz regija koje imaju prosječnu ocijenu regije 3.5-4.5-6.pdf  used on input l
-ine 2856.
+ikaz regija koje imaju prosječnu ocjenu regije 3.5-4.5-6.pdf  used on input li
+ne 2856.
 (pdftex.def)             Requested size: 453.6939pt x 315.17673pt.
 <WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje imaju p
-rosječnu ocijenu regije 3.5-4.5-7.pdf, id=726, 453.695pt x 315.1775pt>
+rosječnu ocjenu regije 3.5-4.5-7.pdf, id=726, 453.695pt x 315.1775pt>
 File: WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje im
-aju prosječnu ocijenu regije 3.5-4.5-7.pdf Graphic file (type pdf)
+aju prosječnu ocjenu regije 3.5-4.5-7.pdf Graphic file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje ima
-ju prosječnu ocijenu regije 3.5-4.5-7.pdf>
+ju prosječnu ocjenu regije 3.5-4.5-7.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/grafički pr
-ikaz regija koje imaju prosječnu ocijenu regije 3.5-4.5-7.pdf  used on input l
-ine 2857.
+ikaz regija koje imaju prosječnu ocjenu regije 3.5-4.5-7.pdf  used on input li
+ne 2857.
 (pdftex.def)             Requested size: 453.6939pt x 315.17673pt.
 <WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje imaju p
-rosječnu ocijenu regije 3.5-4.5-8.pdf, id=727, 453.695pt x 315.1775pt>
+rosječnu ocjenu regije 3.5-4.5-8.pdf, id=727, 453.695pt x 315.1775pt>
 File: WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje im
-aju prosječnu ocijenu regije 3.5-4.5-8.pdf Graphic file (type pdf)
+aju prosječnu ocjenu regije 3.5-4.5-8.pdf Graphic file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje ima
-ju prosječnu ocijenu regije 3.5-4.5-8.pdf>
+ju prosječnu ocjenu regije 3.5-4.5-8.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/grafički pr
-ikaz regija koje imaju prosječnu ocijenu regije 3.5-4.5-8.pdf  used on input l
-ine 2858.
+ikaz regija koje imaju prosječnu ocjenu regije 3.5-4.5-8.pdf  used on input li
+ne 2858.
 (pdftex.def)             Requested size: 453.6939pt x 315.17673pt.
 <WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje imaju p
-rosječnu ocijenu regije 3.5-4.5-9.pdf, id=728, 453.695pt x 315.1775pt>
+rosječnu ocjenu regije 3.5-4.5-9.pdf, id=728, 453.695pt x 315.1775pt>
 File: WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje im
-aju prosječnu ocijenu regije 3.5-4.5-9.pdf Graphic file (type pdf)
+aju prosječnu ocjenu regije 3.5-4.5-9.pdf Graphic file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje ima
-ju prosječnu ocijenu regije 3.5-4.5-9.pdf>
+ju prosječnu ocjenu regije 3.5-4.5-9.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/grafički pr
-ikaz regija koje imaju prosječnu ocijenu regije 3.5-4.5-9.pdf  used on input l
-ine 2859.
+ikaz regija koje imaju prosječnu ocjenu regije 3.5-4.5-9.pdf  used on input li
+ne 2859.
 (pdftex.def)             Requested size: 453.6939pt x 315.17673pt.
 <WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje imaju p
-rosječnu ocijenu regije 3.5-4.5-10.pdf, id=729, 453.695pt x 315.1775pt>
+rosječnu ocjenu regije 3.5-4.5-10.pdf, id=729, 453.695pt x 315.1775pt>
 File: WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje im
-aju prosječnu ocijenu regije 3.5-4.5-10.pdf Graphic file (type pdf)
+aju prosječnu ocjenu regije 3.5-4.5-10.pdf Graphic file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje ima
-ju prosječnu ocijenu regije 3.5-4.5-10.pdf>
+ju prosječnu ocjenu regije 3.5-4.5-10.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/grafički pr
-ikaz regija koje imaju prosječnu ocijenu regije 3.5-4.5-10.pdf  used on input 
-line 2860.
+ikaz regija koje imaju prosječnu ocjenu regije 3.5-4.5-10.pdf  used on input l
+ine 2860.
 (pdftex.def)             Requested size: 453.6939pt x 315.17673pt.
 <WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje imaju p
-rosječnu ocijenu regije 3.5-4.5-11.pdf, id=730, 453.695pt x 315.1775pt>
+rosječnu ocjenu regije 3.5-4.5-11.pdf, id=730, 453.695pt x 315.1775pt>
 File: WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje im
-aju prosječnu ocijenu regije 3.5-4.5-11.pdf Graphic file (type pdf)
+aju prosječnu ocjenu regije 3.5-4.5-11.pdf Graphic file (type pdf)
 <use WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje ima
-ju prosječnu ocijenu regije 3.5-4.5-11.pdf>
+ju prosječnu ocjenu regije 3.5-4.5-11.pdf>
 Package pdftex.def Info: WhaSAP_vivino_analysis_files/figure-latex/grafički pr
-ikaz regija koje imaju prosječnu ocijenu regije 3.5-4.5-11.pdf  used on input 
-line 2861.
+ikaz regija koje imaju prosječnu ocjenu regije 3.5-4.5-11.pdf  used on input l
+ine 2861.
 (pdftex.def)             Requested size: 453.6939pt x 315.17673pt.
 
 Underfull \hbox (badness 10000) in paragraph at lines 2851--2862
@@ -1243,43 +1243,43 @@ Underfull \hbox (badness 10000) in paragraph at lines 2851--2862
  []
 
 [59] [60 <./WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija k
-oje imaju prosječnu ocijenu regije 3.5-4.5-1.pdf> <./WhaSAP_vivino_analysis_fi
-les/figure-latex/grafički prikaz regija koje imaju prosječnu ocijenu regije 3
-.5-4.5-2.pdf>] [61 <./WhaSAP_vivino_analysis_files/figure-latex/grafički prika
-z regija koje imaju prosječnu ocijenu regije 3.5-4.5-3.pdf> <./WhaSAP_vivino_a
-nalysis_files/figure-latex/grafički prikaz regija koje imaju prosječnu ocijen
-u regije 3.5-4.5-4.pdf>] [62 <./WhaSAP_vivino_analysis_files/figure-latex/grafi
-čki prikaz regija koje imaju prosječnu ocijenu regije 3.5-4.5-5.pdf> <./WhaSA
-P_vivino_analysis_files/figure-latex/grafički prikaz regija koje imaju prosje�
-�nu ocijenu regije 3.5-4.5-6.pdf>] [63 <./WhaSAP_vivino_analysis_files/figure-l
-atex/grafički prikaz regija koje imaju prosječnu ocijenu regije 3.5-4.5-7.pdf
-> <./WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje ima
-ju prosječnu ocijenu regije 3.5-4.5-8.pdf>] [64 <./WhaSAP_vivino_analysis_file
-s/figure-latex/grafički prikaz regija koje imaju prosječnu ocijenu regije 3.5
--4.5-9.pdf> <./WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regij
-a koje imaju prosječnu ocijenu regije 3.5-4.5-10.pdf>] [65 <./WhaSAP_vivino_an
-alysis_files/figure-latex/grafički prikaz regija koje imaju prosječnu ocijenu
- regije 3.5-4.5-11.pdf>] [66] (./WhaSAP_vivino_analysis.aux) ) 
+oje imaju prosječnu ocjenu regije 3.5-4.5-1.pdf> <./WhaSAP_vivino_analysis_fil
+es/figure-latex/grafički prikaz regija koje imaju prosječnu ocjenu regije 3.5
+-4.5-2.pdf>] [61 <./WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz 
+regija koje imaju prosječnu ocjenu regije 3.5-4.5-3.pdf> <./WhaSAP_vivino_anal
+ysis_files/figure-latex/grafički prikaz regija koje imaju prosječnu ocjenu re
+gije 3.5-4.5-4.pdf>] [62 <./WhaSAP_vivino_analysis_files/figure-latex/grafički
+ prikaz regija koje imaju prosječnu ocjenu regije 3.5-4.5-5.pdf> <./WhaSAP_viv
+ino_analysis_files/figure-latex/grafički prikaz regija koje imaju prosječnu o
+cjenu regije 3.5-4.5-6.pdf>] [63 <./WhaSAP_vivino_analysis_files/figure-latex/g
+rafički prikaz regija koje imaju prosječnu ocjenu regije 3.5-4.5-7.pdf> <./Wh
+aSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje imaju pros
+ječnu ocjenu regije 3.5-4.5-8.pdf>] [64 <./WhaSAP_vivino_analysis_files/figure
+-latex/grafički prikaz regija koje imaju prosječnu ocjenu regije 3.5-4.5-9.pd
+f> <./WhaSAP_vivino_analysis_files/figure-latex/grafički prikaz regija koje im
+aju prosječnu ocjenu regije 3.5-4.5-10.pdf>] [65 <./WhaSAP_vivino_analysis_fil
+es/figure-latex/grafički prikaz regija koje imaju prosječnu ocjenu regije 3.5
+-4.5-11.pdf>] [66] (./WhaSAP_vivino_analysis.aux) ) 
 Here is how much of TeX's memory you used:
- 14351 strings out of 478287
- 254427 string characters out of 5849289
+ 14353 strings out of 478287
+ 254372 string characters out of 5849289
  587961 words of memory out of 5000000
  32060 multiletter control sequences out of 15000+600000
- 529599 words of font info for 137 fonts, out of 8000000 for 9000
+ 529682 words of font info for 138 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  74i,9n,77p,1019b,743s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf
-/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathit.e
-nc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/d
-vips/lm/lm-ec.enc}</usr/share/texmf/fonts/type1/public/lm/lmbx12.pfb></usr/shar
-e/texmf/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/public/l
-m/lmmi7.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf
-/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr17.
-pfb></usr/share/texmf/fonts/type1/public/lm/lmr7.pfb></usr/share/texmf/fonts/ty
-pe1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtk10.pfb></u
-sr/share/texmf/fonts/type1/public/lm/lmtt10.pfb></usr/share/texmf/fonts/type1/p
-ublic/lm/lmtti10.pfb>
-Output written on WhaSAP_vivino_analysis.pdf (66 pages, 9104182 bytes).
+{/usr/share/texmf/fonts/enc/
+dvips/lm/lm-ts1.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/sh
+are/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-
+ec.enc}</usr/share/texmf/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fon
+ts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi7.pfb
+></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type
+1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr17.pfb></usr/s
+hare/texmf/fonts/type1/public/lm/lmr7.pfb></usr/share/texmf/fonts/type1/public/
+lm/lmri10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtk10.pfb></usr/share/te
+xmf/fonts/type1/public/lm/lmtt10.pfb></usr/share/texmf/fonts/type1/public/lm/lm
+tti10.pfb>
+Output written on WhaSAP_vivino_analysis.pdf (66 pages, 9104286 bytes).
 PDF statistics:
  925 PDF objects out of 1000 (max. 8388607)
  633 compressed objects within 7 object streams
