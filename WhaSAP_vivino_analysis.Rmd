@@ -551,14 +551,20 @@ Iz provedenog testa vidimo kako je p-vrijednost 0.0004, iako je p-vrijednost ve�
 
 
 
+Sljedeće što nas zanima vezano za ovaj skup podataka je: Može li se na temelju dostupnih podataka predvidjeti cijena vina?
 
-Izbacivanje redaka koji su bez vrijednosti ili nevaljane vrijednosti.
+Kako bih probali odgovoriti na ovo pitanje koristit ćemo linearnu regresiju.
+
+
+Prvo izbacujemo nevaljanje vrijednosti iz seta podataka jer operacije koje su potrebne za izvođenje linearne regresije nije moguće izvoditi na njima.
 ```{r}
 dataset_vina <- dataset_vina[dataset_vina$Year != "N.V." & !is.na(dataset_vina$Price) & dataset_vina$Year != '', ]
 ```
 
-Za predviđanje cijena vina koristit ćemo linearnu regresiju, no prvo je potrebno promotriti podatke kako bih znali kako konstruirat model.
-Različiti se prikazi koriste za numeričke i kategorijske varijable. Već se iz samih grafova vidi da postoje neke zavisnosti među varijablama, npr. vidi se da će vjerojatno s rastom ocjene rasti i cijena, dok broj recenzija ne izgleda da radi toliku razliku u cijeni.
+
+Kako kod LR pokušavamo pronaći vezu između ulaznih i izlaznih (cijena) varijabli dobra je praksa prvo promotriti utjecaj pojedinačnih varijabli na izlaznu.
+Različiti se prikazi koriste za numeričke i kategorijske varijable. Već se iz samih grafova vidi da postoje neke zavisnosti među varijablama, npr. vidljivo je da će vjerojatno s rastom ocjene rasti i cijena, dok broj recenzija ne izgleda da uzrokuje toliku promjenu u cijeni.
+
 ```{r scatter plots}
 dataset_vina$Age = 2025 - as.numeric(dataset_vina$Year)
 fit.age = lm(Price~Age,data=dataset_vina)
@@ -584,7 +590,8 @@ boxplot(Price~Country_Code,data=dataset_vina)
 ```
 
 
-Linearna regresija je jako osjetljiva na stršeče vrijednosti pa ćemo variajblu Price provući kroz logaritamsku funkciju kako bi se umanjio njihov utjecaj. Pomoću histograma možemo vidjeti da provlaćenjem cijene kroz logaritamsku funkciju distribucija više nalikuje normalnoj.
+Linearna regresija je jako osjetljiva na stršeče vrijednosti pa ćemo variajblu Price provući kroz logaritamsku funkciju kako bi se umanjio njihov utjecaj. Pomoću histograma možemo vidjeti da provlaćenjem cijene kroz logaritamsku funkciju distribucija više nalikuje normalnoj stoga ćemo u kasnijim modelima zasigurno koristiti log(Cijena).
+
 ```{r}
 hist(dataset_vina$Price)
 
@@ -593,6 +600,7 @@ dataset_vina$Log_Price <- log(dataset_vina$Price)
 hist(dataset_vina$Log_Price)
 ```
 Sada se bolje vidi kako numeričke varijable (Age, Reviews i Ratings) utjeću na cijenu vina. Uz to su dodani još grafovi s varijablama Age i Reviews provućenim kroz log.
+
 ```{r lin plot}
 
 dataset_vina$Age = 2025 - as.numeric(dataset_vina$Year)
@@ -626,6 +634,9 @@ plot(dataset_vina$Log_Reviews,dataset_vina$Log_Price)
 lines(dataset_vina$Log_Reviews,fit.reviews$fitted.values,col='red')
 ```
 Korelacijska matrica prikazuje povezanost između nezavisnih varijabli, što nam je bitno jer linearna regresiija loše funkcionira kada su nezavisne varijable jako korelirane, stoga je u tom slućaju dobra praksa izbaciti one koje su višak.
+
+Iako se ovdje vidi neka korelacija između starosti vina i ocjene smatramo da nije dovoljna za izbacivanje ijedne od te dvije varijable.
+
 ```{r}
 
 plot(dataset_vina$Rating, dataset_vina$Age)
@@ -635,7 +646,8 @@ plot(dataset_vina$Age, dataset_vina$Reviews)
 cor(cbind(dataset_vina$Age,dataset_vina$Rating,dataset_vina$Reviews)) # korelacijski koeficijenti parova regresora
 
 ```
-Katgorijske varijable se predstavljaju dummy varijablama. Svaka kategorija predstavljena je svojom vlastitom indikatorskom varijablom koja poprima vrijednost 1 u slučaju da originalna kategorijska varijabla poprima vrijednost te kategorije, a 0 inače.
+Katgorijske varijable se predstavljaju dummy varijablama jer linearna regresija radi samo s numeričkim podacima. Svaka kategorija predstavljena je svojom vlastitom indikatorskom varijablom koja poprima vrijednost 1 u slučaju da originalna kategorijska varijabla poprima vrijednost te kategorije, a 0 inače.
+
 ```{r kategorijske ulazne varijable - dummy varijable}
 
 require(fastDummies)
@@ -644,40 +656,38 @@ dataset_vina.d = dummy_cols(dataset_vina,select_columns=c('Primary_Grape', 'Natu
 summary(dataset_vina.d)
 
 ```
-U prvom modelu korištene su varijable: Age, Rating, Reviews, Natural, Style, Country_Code, Primary_Grape. Vidi se da model dosta loše procjenjuje po samoj prosječnoj grešci koja iznosi 105.3 eura. Vidi se i da su neke od kategorijskih varijabla visoko korelirane pa ćemo te varijable izbaciti iz modela. Također će biti izbaćene i one varijable koje nisu znaćajne za model tj. imaju visoku p vrijednost. Bitno je i da ovakav model za neke cijene predviđa negativne vrijednosti što nije prihvatljivo u ovom slućaju.
+
+U prvom modelu korištene su varijable: Age, Rating, Reviews, Natural, Style, Country_Code, Primary_Grape. Vidi se da model dosta loše procjenjuje po samoj prosječnoj grešci koja iznosi 105.3 eura te R-squared metrikom 0.2287. Također je vidljivo da su neke od kategorijskih varijabla visoko korelirane pa ćemo te varijable izbaciti iz modela, kao i one varijable koje nisu znaćajne za model tj. imaju visoku p vrijednost. Bitno je i da ovakav model za neke cijene predviđa negativne vrijednosti što nije prihvatljivo u ovom slućaju.
+
 ```{r lin plot}
 model <- lm(Price ~ Age + Rating + Reviews + Natural + Style + Country_Code + Primary_Grape, data = dataset_vina)
 
 summary(model)
 plot(model)
 ```
-
+Sljedeći model očekivano nije ništa bolji jer smo samo makli nepotrebne varijable i ništa nismo promjenili osim toga, ali on će biti referentni model s kojim ćemo uspoređivati ostale.
 ```{r lin plot}
 
 model_original <- lm(Price ~ Age + Rating + Reviews + Country_Code_AUS + Country_Code_FRA + Country_Code_ESP + Country_Code_USA, data = dataset_vina.d)
 
-summary(model)
+summary(model_original)
 
 plot(model_original)
 
 ```
-Kada se koristi log od Cijene u modelu već se vidi znatno poboljšanje po R-squared i F testovima. No teško je bez računanja reći koliko je prosječna greška bolja jer je cijena u log.
+Kada se koristi log od Cijene u modelu već se vidi znatno poboljšanje po R-squared i F testovima. No teško je bez računanja reći koliko je prosječna greška bolja.
 
 ```{r lin plot}
-
-model <- lm(Log_Price ~ Age + Rating + Reviews + Natural + Style + Country_Code + Primary_Grape, data = dataset_vina)
-
-summary(model)
-plot(model)
-```
-
-
-```{r lin plot}
-
 model_log <- lm(Log_Price ~ Age + Rating + Reviews + Country_Code_AUS + Country_Code_FRA + Country_Code_ESP + Country_Code_USA, data = dataset_vina.d)
 summary(model_log)
 plot(model_log)
 
+```
+
+U sljedećem isječku koda isprobavamo modele s interakcijskim varijablama. Njih koristimo jer se ponekad učinci varijabli zajedno razlikuju od njihovog pojedinačnog doprinosa.
+To je očito slučaj i s našim setom podataka, jer se metrika R-sqr još dodatno poboljšava uvođenjem tih značajki.
+
+```{r lin plot}
 
 model_log <- lm(Log_Price ~ Age + Rating + exp(Rating) + I(Age * Reviews * Rating) + log(Reviews) + Country_Code_AUS + Country_Code_FRA + Country_Code_ESP + Country_Code_USA, data = dataset_vina.d)
 summary(model_log)
@@ -689,6 +699,8 @@ plot(model_log)
 
 
 ```
+
+Kako bih lakše pridočili razliku u modelima ovdje računamo razliku prosječne pogreške između modela s CIjenom i log(cijenom)
 
 ```{r}
 
@@ -707,7 +719,10 @@ cat("MAE (Original Scale):", mae_original, "\n")
 cat("MAE (Log Scale):", mae_log, "\n")
 
 ```
-Kako bi poboljšali model ponekad je dobro izbaciti stršeće vrijednosti, jer one znatno utjeću na model a često nisu reprezentativna za većinu uzoraka. Npr, vrlo skupa ili retka vina često predstavljaju specifične slučajeve koje je teško objasniti bez šireg konteksta.
+
+Kako bi poboljšali model ponekad je dobro izbaciti stršeće vrijednosti, jer one znatno utjeću na model a često nisu reprezentativna za većinu uzoraka.
+Iako smo ovdje to prikazali ponekad izbacivanje stršečih vrijednosti izbacuje bitne podatke o anomalijama u modelu što možda poboljšava model na podacima na kojima je treniran, ali gubi mogućnost generalizacije na neviđenim podacima. To je očenito preporučeno kada se smatra da su stršeče vrijednosti rezultat pogreške u pdoacima što ovdje nije nužno slučaj.
+
 ```{r}
 
 standardized_residuals <- rstandard(model_log)
@@ -723,24 +738,27 @@ summary(model_log)
 plot(model_log)
 
 ```
-
+Vidi se da se greška modela bez outliera dodatno smanjila, ali na punom skupu podataka s stršečim vrijednostima performa nešto gore.
 ```{r}
 
 
 predictions_original <- predict(model_original, newdata = dataset_vina.d)
 
 predictions_log <- exp(predict(model_log, newdata = dataset_vina.cleaned))
+predictions_log_full <- exp(predict(model_log, newdata = dataset_vina.d)) 
 
 actual <- dataset_vina.d$Price
 actual_cleaned <- dataset_vina.cleaned$Price
+actual_full <- dataset_vina.d$Price
 
 mae_original <- mean(abs(predictions_original - actual))
 mae_log <- mean(abs(predictions_log - actual_cleaned))
-
+mae_log_full <- mean(abs(predictions_log_full - actual_full))
 
 
 cat("MAE (Original Scale):", mae_original, "\n")
-cat("MAE (Log Scale):", mae_log, "\n")
+cat("MAE (Log Scale Cleaned):", mae_log, "\n")
+cat("MAE (Log Scale Full):", mae_log_full, "\n")
 
 ```
 
